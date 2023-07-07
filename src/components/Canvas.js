@@ -1,20 +1,42 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 const Canvas = ({ width, height }) => {
 
     const canvasRef = useRef(null)
+    const contextRef = useRef(null)
 
-    const startDrawing = () => {
+    const [isDrawing, setIsDrawing] = useState(false)
+
+    const startDrawing = ({ nativeEvent }) => {
+        const { offsetX, offsetY } = nativeEvent;
+        contextRef.current.beginPath();
+        contextRef.current.moveTo(offsetX, offsetY);
+        setIsDrawing(true)
+
     }
 
     const finishDrawing = () => {
+        setIsDrawing(false);
+        contextRef.current.closePath();
     }
 
-    const draw = () => {
+    const draw = ({ nativeEvent }) => {
+        if (!isDrawing) {
+            return
+        }
+        const { offsetX, offsetY } = nativeEvent;
+        contextRef.current.lineTo(offsetX, offsetY);
+        contextRef.current.stroke()
     }
 
     useEffect(() => {
+        const canvas = canvasRef.current;
 
+        const context = canvas.getContext("2d")
+        context.lineCap = "round"
+        context.strokeStyle = "black"
+        context.lineWidth = 5
+        contextRef.current = context
     }, [])
 
     return (
