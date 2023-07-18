@@ -38,3 +38,33 @@ p {
 input[type=number] {
   width: 50px;
 }
+
+.btn{
+  height: 24px;
+  border-radius: 4px;
+  padding: 1em;
+  background-color: #6d47d9;
+  color: azure;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  animation: shaking 2s infinite;
+}
+
+@keyframes shaking {
+  
+  10% {
+    transform: scale(1.05) rotate(5deg);
+  }
+  20% {
+    transform: scale(1.05) rotate(-5deg);
+  }
+  30% {
+    transform: scale(1.05) rotate(5deg);
+  }
+  40% {
+    transform: none;
+  }
+}
