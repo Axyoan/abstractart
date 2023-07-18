@@ -79,5 +79,5 @@ const Canvas = ({ width, height }) => {
 export default Canvas
 
 const canvasStyle = {
-    border: "1px solid black"
+    border: "1px sol    id black"
 }
