@@ -30,14 +30,19 @@ const Canvas = ({ width, height }) => {
         contextRef.current.stroke()
     }
 
+    const handleClearCanvasButton = (e) => {
+        const canvas = canvasRef.current;
+        const context = canvas.getContext("2d")
+        context.clearRect(0, 0, canvas.width, canvas.height);
+    }
 
     useEffect(() => {
+        console.log("render")
         const canvas = canvasRef.current;
 
         const context = canvas.getContext("2d")
         context.lineCap = "round"
         context.lineJoin = "round"
-        console.log(context)
         context.strokeStyle = "black"
         context.lineWidth = 5
         contextRef.current = context
@@ -59,12 +64,14 @@ const Canvas = ({ width, height }) => {
                 max={50}
                 defaultValue={5}
                 renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
-                onChange={(value, index) => {
+                onChange={(value, _) => {
                     const canvas = canvasRef.current;
                     const context = canvas.getContext("2d")
                     context.lineWidth = value
                 }}
             />
+            <button onClick={handleClearCanvasButton}>Clear canvas</button>
+
         </>
     )
 }
