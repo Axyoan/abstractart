@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import ReactSlider from 'react-slider'
 
 const Canvas = ({ width, height }) => {
 
@@ -29,26 +30,42 @@ const Canvas = ({ width, height }) => {
         contextRef.current.stroke()
     }
 
+
     useEffect(() => {
         const canvas = canvasRef.current;
 
         const context = canvas.getContext("2d")
         context.lineCap = "round"
+        context.lineJoin = "round"
+        console.log(context)
         context.strokeStyle = "black"
         context.lineWidth = 5
         contextRef.current = context
     }, [])
 
     return (
-        <canvas
-            width={width}
-            height={height}
-            style={canvasStyle}
-            onMouseDown={startDrawing}
-            onMouseUp={finishDrawing}
-            onMouseMove={draw}
-            onMouseLeave={finishDrawing}
-            ref={canvasRef}></canvas>
+        <>
+            <canvas
+                width={width}
+                height={height}
+                style={canvasStyle}
+                onMouseDown={startDrawing}
+                onMouseUp={finishDrawing}
+                onMouseMove={draw}
+                onMouseLeave={finishDrawing}
+                ref={canvasRef} />
+            <ReactSlider
+                min={0}
+                max={50}
+                defaultValue={5}
+                renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
+                onChange={(value, index) => {
+                    const canvas = canvasRef.current;
+                    const context = canvas.getContext("2d")
+                    context.lineWidth = value
+                }}
+            />
+        </>
     )
 }
 
