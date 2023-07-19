@@ -1,7 +1,9 @@
 import './App.css';
+import { Routes, Route } from "react-router-dom"
+import { initializeApp } from "firebase/app";
+
 import Canvas from './components/Canvas';
 
-import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -21,7 +23,9 @@ const app = initializeApp(firebaseConfig);
 function App() {
   return (
     <div className="App">
-      <Canvas width={720} height={720} />
+      <Routes>
+        <Route path="/" element={<Canvas width={720} height={720} />} />
+      </Routes>
     </div>
   );
 }
