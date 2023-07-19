@@ -1,8 +1,13 @@
 import React, { useState } from 'react'
 import { createUserWithEmailAndPassword } from "firebase/auth"
 import { auth } from '../firebase-config';
+import "./loginform.css"
 
 export const SignUp = () => {
+  
+ 
+//prueba de inicio sesion
+
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,10 +23,23 @@ export const SignUp = () => {
 
   return (
     <>
-      <div>Sign Up</div>
-      <input placeholder='Email' onChange={(e) => { setEmail(e.target.value) }} />
-      <input placeholder='password' type='password' onChange={(e) => { setPassword(e.target.value) }} />
+      <div>
+        <h1>Sign Up</h1>
+        <h2>
+        <input placeholder='Email' onChange={(e) => { setEmail(e.target.value) }} />
+        </h2>
+        <h3>
+        <input placeholder='password' type='password' onChange={(e) => { setPassword(e.target.value) }} />
+        </h3>
+     
+      
       <button onClick={register}>Create user</button>
+
+     
+      
+
+      </div>
+      
     </>
   )
 }
