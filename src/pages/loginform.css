@@ -1,21 +1,27 @@
 .App {
     text-align: center;
     display:grid;
-    min-height: 100vh;
+    min-height: 50vh;
     align-items: center;
     justify-content: center;
     color: white;
-    background-image: linear-gradient(79deg, #511aaf, #C66FBC 48%, #ce14d4);
-  }
-  
+
+    
+}
+    
   .auth-form-container, .login-form, .register-form {
     display: box;
     flex-direction: column;
+    width: 100px;
+    height: 100px;
+    
   }
 
 .auth-form-container, .login-form, .register-form {
     display: flex;
     flex-direction: column;
+    width: 100px;
+    height: 100px;
   }
   
   @media screen and (min-width: 40px) {
@@ -24,6 +30,7 @@
       border: 1px solid white;
       border-radius: 10px;
       margin: 0.5rem;
+      
     }
   }
   
