@@ -13,10 +13,22 @@ html {
 }
 
 body {
-  background-image: linear-gradient(110deg, #f93d66, #6d47d9);
+  background-image: url(../public/img/fondo.svg);
   margin: 50px;
   background-position: fixed;
+ 
+  background-size: cover;
 }
+.photo{
+  background: url(../public/img/logo.png);
+  width: 200px;
+  height: 200px;
+  background-size: 200px;
+  background-repeat: no-repeat;
+  background-position: top right;
+  
+}
+
 
 span {
   background-color: darkgrey;
@@ -68,3 +80,4 @@ input[type=number] {
     transform: none;
   }
 }
+
