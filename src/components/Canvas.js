@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import ReactSlider from 'react-slider'
+import { getStorage, ref, uploadBytes } from "firebase/storage";
 
 const Canvas = ({ width, height }) => {
 
@@ -36,6 +37,18 @@ const Canvas = ({ width, height }) => {
         context.clearRect(0, 0, canvas.width, canvas.height);
     }
 
+    const uploadImage = () => {
+        const storage = getStorage();
+        canvasRef.current.toBlob(function (blob) {
+            const storageRef = ref(storage, 'images/test.jpg');
+            uploadBytes(storageRef, blob).then((snapshot) => {
+                console.log('Uploaded a blob or file!');
+            });
+        });
+
+
+    }
+
     useEffect(() => {
         console.log("render")
         const canvas = canvasRef.current;
@@ -70,8 +83,8 @@ const Canvas = ({ width, height }) => {
                     context.lineWidth = value
                 }}
             />
-            <button onClick={handleClearCanvasButton} class= "btn"> eliminar canvas</button>
-
+            <button onClick={handleClearCanvasButton} class="btn"> eliminar canvas</button>
+            <button onClick={uploadImage}>subir chingadera</button>
         </>
     )
 }
@@ -79,5 +92,5 @@ const Canvas = ({ width, height }) => {
 export default Canvas
 
 const canvasStyle = {
-    border: "1px sol    id black"
+    border: "1px solid black"
 }

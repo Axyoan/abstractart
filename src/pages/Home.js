@@ -4,6 +4,6 @@ import Canvas from "../components/Canvas"
 
 export const Home = () => {
     return (
-        <Canvas width={720} height={720} />
+        <Canvas width={500} height={500} />
     )
 }
