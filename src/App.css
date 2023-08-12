@@ -4,11 +4,10 @@
 
 section {
   color: #fff;
-  text-shadow: 3px 3px rgba(238, 238, 241, 0.5);
-  background-color: #ffb6b9b0;
+  width:400vh;
   height: 50vh;  
 }
 
 .navBg {
-  background-color: #6410e0;
+  background-color: #6c3bc5;
 }
