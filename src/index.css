@@ -52,18 +52,19 @@ input[type=number] {
 }
 
 .btn{
-  height: 24px;
+  height: 40px;
   border-radius: 4px;
   padding: 1em;
   background-color: #6d47d9;
   color: azure;
   border: none;
-  display: flex;
+  display: center;
   justify-content: center;
   align-items: center;
 
   animation: shaking 2s infinite;
 }
+
 
 @keyframes shaking {
   
