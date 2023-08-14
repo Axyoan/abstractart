@@ -14,11 +14,11 @@ html {
 
 body {
   background-image: url(../public/img/fondo.svg);
-  margin: 50px;
+  margin: 0px;  /* para arreglar lo del espacio de arriba */
   background-position: fixed;
- 
   background-size: cover;
 }
+
 .photo{
   background: url(../public/img/logo.png);
   width: 200px;
