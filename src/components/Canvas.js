@@ -7,6 +7,18 @@ const Canvas = ({ width, height }) => {
     const canvasRef = useRef(null)
     const contextRef = useRef(null)
 
+    const canvasContainerStyle = {
+        position: "relative",
+        left: "0px",
+        right: "0px",
+        marginLeft: "auto",
+        marginRight: "auto",
+        height:height,
+        width:width,
+        backgroundColor: "white",
+        zIndex:"0"
+    }
+
     const [isDrawing, setIsDrawing] = useState(false)
 
     const startDrawing = ({ nativeEvent }) => {
@@ -63,15 +75,23 @@ const Canvas = ({ width, height }) => {
 
     return (
         <>
-            <canvas
-                width={width}
-                height={height}
-                style={canvasStyle}
-                onMouseDown={startDrawing}
-                onMouseUp={finishDrawing}
-                onMouseMove={draw}
-                onMouseLeave={finishDrawing}
-                ref={canvasRef} />
+            <div style={canvasContainerStyle}>
+                <canvas
+                    width={width}
+                    height={height}
+                    style={canvasStyle}
+                    onMouseDown={startDrawing}
+                    onMouseUp={finishDrawing}
+                    onMouseMove={draw}
+                    onMouseLeave={finishDrawing}
+                    ref={canvasRef} />
+
+                <canvas
+                    width={width/10}
+                    height={height}
+                    style={canvasJoinStyle}
+                />
+            </div>
             <ReactSlider
                 min={0}
                 max={50}
@@ -92,5 +112,14 @@ const Canvas = ({ width, height }) => {
 export default Canvas
 
 const canvasStyle = {
-    border: "1px solid black"
+    border: "1px solid black",
+    zIndex: "0"
+}
+
+const canvasJoinStyle = {
+    borderLeft: "1px dashed black",
+    position: "absolute",
+    right: "0px",
+    top: "0px",
+    zIndex: "-1",
 }
