@@ -6,17 +6,16 @@ const Canvas = ({ width, height }) => {
 
     const canvasRef = useRef(null)
     const contextRef = useRef(null)
-
     const canvasContainerStyle = {
         position: "relative",
         left: "0px",
         right: "0px",
         marginLeft: "auto",
         marginRight: "auto",
-        height:height,
-        width:width,
+        height: height,
+        width: width,
         backgroundColor: "white",
-        zIndex:"0"
+        zIndex: "0"
     }
 
     const [isDrawing, setIsDrawing] = useState(false)
@@ -52,10 +51,12 @@ const Canvas = ({ width, height }) => {
     const uploadImage = () => {
         const storage = getStorage();
         canvasRef.current.toBlob(function (blob) {
-            const storageRef = ref(storage, 'images/test.jpg');
+            const url = 'images/' + crypto.randomUUID() + '.jpg'
+            const storageRef = ref(storage, url);
             uploadBytes(storageRef, blob).then((snapshot) => {
                 console.log('Uploaded a blob or file!');
             });
+
         });
 
 
@@ -87,7 +88,7 @@ const Canvas = ({ width, height }) => {
                     ref={canvasRef} />
 
                 <canvas
-                    width={width/10}
+                    width={width / 10}
                     height={height}
                     style={canvasJoinStyle}
                 />
