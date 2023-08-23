@@ -7,6 +7,7 @@ import MainHome from './pages/MainHome';
 import Galery from './pages/galery';
 import NavBarExample from './layouts/navbar';
 import StartDrawing from './pages/StartDrawing';
+import ContinueDrawing from './pages/ContinueDrawing'
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <Route path='startdrawing' element={<StartDrawing />} />
           <Route path='signup' element={<SignUp />} />
           <Route path='login' element={<LogIn />} />
+          <Route path="continueDrawing/:id" element={<ContinueDrawing />} />
           <Route path='*' element={<Navigate replace to="/" />} />
         </Route>
       </Routes>

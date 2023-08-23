@@ -59,7 +59,8 @@ const Canvas = ({ width, height }) => {
 
     const uploadImage = () => {
         const storage = getStorage();
-        const id = crypto.randomUUID()
+        //const id = crypto.randomUUID()
+        const id = "2f981207-8018 - 453c - b046 - 88b52da9027a"
         canvasRef.current.toBlob(function (blob) {
             const url = 'images/' + id + '.jpg'
             const storageRef = ref(storage, url);
