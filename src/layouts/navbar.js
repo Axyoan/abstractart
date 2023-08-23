@@ -21,9 +21,9 @@ const NavBarExample = () => {
                         <Nav className="me-auto">
                             <Nav.Link as={Link} to="/" >MainHome</Nav.Link>
                             <Nav.Link as={Link} to="/StartDrawing">Start Drawing</Nav.Link>
-                            <Nav.Link as={Link} to="/signup">SignUp</Nav.Link>
-                            <Nav.Link as={Link} to="/galery">Galery</Nav.Link>
                             <Nav.Link as={Link} to={getContinueDrawingURL()}>Continue Drawing</Nav.Link>
+                            <Nav.Link as={Link} to="/galery">Galery</Nav.Link>
+                            <Nav.Link as={Link} to="/signup">SignUp</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
