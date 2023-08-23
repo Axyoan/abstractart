@@ -4,14 +4,24 @@ import DrawingArea from '../components/DrawingArea';
 import { doc, getDoc } from "firebase/firestore";
 import { db } from '../firebase-config'
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 
 
 const ContinueDrawing = () => {
     const { id } = useParams();
     const [imageUrl, setImageUrl] = useState(null)
+    const auth = getAuth()
+    const [isUserSignedIn, setIsUserSignedIn] = useState(false)
+
+    onAuthStateChanged(auth, (u) => {
+        setIsUserSignedIn(u != null)
+    })
 
     useEffect(() => {
+        if (!isUserSignedIn) {
+            return
+        }
         const docRef = doc(db, "unfinishedDrawings", "2f981207-8018 - 453c - b046 - 88b52da9027a");
 
         const fetchData = async () => {
@@ -38,7 +48,12 @@ const ContinueDrawing = () => {
 
     return (
         <>
-            <DrawingArea isNewDrawing={false} imageUrl={imageUrl}/>
+
+            {isUserSignedIn ?
+                <DrawingArea isNewDrawing={false} imageUrl={imageUrl} />
+                :
+                <div>Log in to draw!</div>}
+
         </>
     )
 }
