@@ -2,6 +2,7 @@ import './App.css';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import { SignUp } from './pages/SignUp';
+import LogIn from './pages/LogIn'
 import MainHome from './pages/MainHome';
 import Galery from './pages/galery';
 import NavBarExample from './layouts/navbar';
@@ -18,6 +19,7 @@ function App() {
           <Route path='galery' element={<Galery />} />
           <Route path='startdrawing' element={<StartDrawing />} />
           <Route path='signup' element={<SignUp />} />
+          <Route path='login' element={<LogIn />} />
           <Route path='*' element={<Navigate replace to="/" />} />
         </Route>
       </Routes>

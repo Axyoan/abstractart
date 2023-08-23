@@ -56,10 +56,7 @@ const Canvas = ({ width, height }) => {
             uploadBytes(storageRef, blob).then((snapshot) => {
                 console.log('Uploaded a blob or file!');
             });
-
         });
-
-
     }
 
     useEffect(() => {
