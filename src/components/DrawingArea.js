@@ -4,7 +4,7 @@ import { getStorage, ref, uploadBytes } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from '../firebase-config'
 
-const DrawingArea = ({ isNewDrawing, imageUrl = null }) => {
+const DrawingArea = ({ isNewDrawing, imageUrl = null, imageId = null }) => {
 
     const canvasRef = useRef(null)
     const unfinishedCanvasRef = useRef(null)
@@ -14,6 +14,15 @@ const DrawingArea = ({ isNewDrawing, imageUrl = null }) => {
             drawingId: id,
         });
     }
+
+    const associateImagesInDB = async (secondId) => {
+        await setDoc(doc(db, "completedDrawingsIds", imageId + secondId), {
+            firstId: imageId,
+            secondId: secondId
+        });
+
+    }
+
     const uploadImage = () => {
         const storage = getStorage();
         const id = crypto.randomUUID()
@@ -26,6 +35,9 @@ const DrawingArea = ({ isNewDrawing, imageUrl = null }) => {
         });
         if (isNewDrawing) {
             saveImageId(id)
+        }
+        else {
+            associateImagesInDB(id)
         }
     }
     useEffect(() => {
