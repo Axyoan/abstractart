@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
-import { createUserWithEmailAndPassword } from "firebase/auth"
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth"
+
 import { auth } from '../firebase-config';
 import "./loginform.css"
+
+
 
 export const SignUp = () => {
   
@@ -20,6 +23,15 @@ export const SignUp = () => {
       console.error(error)
     }
   }
+  const login = async () => {
+    try {
+      // const user = await createUserWithEmailAndPassword(auth, email, password);
+      const user = await signInWithEmailAndPassword(auth,email,password)
+
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   return (
     <>
@@ -33,9 +45,19 @@ export const SignUp = () => {
         </h3>
      
       
-      <button onClick={register}>Create user</button>
+         <button onClick={register}>Create user</button>
+         
+         <button onClick={login}>Login</button>
 
      
+      
+
+      </div>
+      
+    </>
+  )
+}
+
       
 
       </div>
