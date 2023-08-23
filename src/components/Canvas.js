@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import ReactSlider from 'react-slider'
 import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from '../firebase-config'
 
 const Canvas = ({ width, height }) => {
 
@@ -48,15 +50,25 @@ const Canvas = ({ width, height }) => {
         context.clearRect(0, 0, canvas.width, canvas.height);
     }
 
+    const saveImageId = async (id) => {
+        await setDoc(doc(db, "unfinishedDrawings", id), {
+            drawingId: id,
+        });
+    }
+
+
     const uploadImage = () => {
         const storage = getStorage();
+        const id = crypto.randomUUID()
         canvasRef.current.toBlob(function (blob) {
-            const url = 'images/' + crypto.randomUUID() + '.jpg'
+            const url = 'images/' + id + '.jpg'
             const storageRef = ref(storage, url);
             uploadBytes(storageRef, blob).then((snapshot) => {
                 console.log('Uploaded a blob or file!');
             });
         });
+        saveImageId(id)
+
     }
 
     useEffect(() => {
