@@ -15,7 +15,10 @@ const StartDrawing = () => {
         <>
             <button onClick={() => auth.signOut()} />
             {console.log("wat",)}
-            {isUserSignedIn ? <DrawingArea /> : <div>Log in to draw!</div>}
+            {isUserSignedIn ?
+                <DrawingArea isNewDrawing={true} />
+                :
+                <div>Log in to draw!</div>}
         </>
     )
 }

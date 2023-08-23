@@ -1,12 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import ReactSlider from 'react-slider'
-import { getStorage, ref, uploadBytes } from "firebase/storage";
-import { doc, setDoc } from "firebase/firestore";
-import { db } from '../firebase-config'
 
-const Canvas = ({ width, height }) => {
+const Canvas = ({ width, height, canvasRef, unfinishedCanvasRef, isNewDrawing, imageUrl = null }) => {
 
-    const canvasRef = useRef(null)
     const contextRef = useRef(null)
     const canvasContainerStyle = {
         position: "relative",
@@ -50,27 +46,6 @@ const Canvas = ({ width, height }) => {
         context.clearRect(0, 0, canvas.width, canvas.height);
     }
 
-    const saveImageId = async (id) => {
-        await setDoc(doc(db, "unfinishedDrawings", id), {
-            drawingId: id,
-        });
-    }
-
-
-    const uploadImage = () => {
-        const storage = getStorage();
-        //const id = crypto.randomUUID()
-        const id = "2f981207-8018 - 453c - b046 - 88b52da9027a"
-        canvasRef.current.toBlob(function (blob) {
-            const url = 'images/' + id + '.jpg'
-            const storageRef = ref(storage, url);
-            uploadBytes(storageRef, blob).then((snapshot) => {
-                console.log('Uploaded a blob or file!');
-            });
-        });
-        saveImageId(id)
-
-    }
 
     useEffect(() => {
         console.log("render")
@@ -82,7 +57,19 @@ const Canvas = ({ width, height }) => {
         context.strokeStyle = "black"
         context.lineWidth = 5
         contextRef.current = context
-    }, [])
+
+        if (!isNewDrawing) {
+            const unfinishedCanvas = unfinishedCanvasRef.current;
+            const unfinishedCanvasContext = unfinishedCanvas.getContext("2d")
+            const img = new Image();
+            img.src = imageUrl
+            img.onload = function () {
+                console.log(unfinishedCanvasContext)
+                unfinishedCanvasContext.drawImage(img, -450, 0);
+            };
+        }
+
+    }, [imageUrl])
 
     return (
         <>
@@ -98,9 +85,10 @@ const Canvas = ({ width, height }) => {
                     ref={canvasRef} />
 
                 <canvas
-                    width={width / 10}
+                    width={50}
                     height={height}
-                    style={canvasJoinStyle}
+                    ref={unfinishedCanvasRef}
+                    style={isNewDrawing ? canvasJoinStyle : canvasJoinStyleContinueDrawing}
                 />
             </div>
             <ReactSlider
@@ -115,7 +103,6 @@ const Canvas = ({ width, height }) => {
                 }}
             />
             <button onClick={handleClearCanvasButton} class="btn"> eliminar canvas</button>
-            <button onClick={uploadImage}>subir chingadera</button>
         </>
     )
 }
@@ -131,6 +118,14 @@ const canvasJoinStyle = {
     borderLeft: "1px dashed black",
     position: "absolute",
     right: "0px",
+    top: "0px",
+    zIndex: "-1",
+}
+
+const canvasJoinStyleContinueDrawing = {
+    borderRight: "1px dashed black",
+    position: "absolute",
+    left: "0px",
     top: "0px",
     zIndex: "-1",
 }
