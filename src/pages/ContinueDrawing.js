@@ -6,23 +6,25 @@ import { db } from '../firebase-config'
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
-
-
 const ContinueDrawing = () => {
     const { id } = useParams();
     const [imageUrl, setImageUrl] = useState(null)
     const auth = getAuth()
     const [isUserSignedIn, setIsUserSignedIn] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
 
     onAuthStateChanged(auth, (u) => {
         setIsUserSignedIn(u != null)
     })
 
     useEffect(() => {
+        setIsLoading(true)
         if (!isUserSignedIn) {
+            console.log("user not signed in")
+            setIsLoading(false)
             return
         }
-        const docRef = doc(db, "unfinishedDrawings", "2f981207-8018 - 453c - b046 - 88b52da9027a");
+        const docRef = doc(db, "unfinishedDrawings", id);
 
         const fetchData = async () => {
             const newDocSnap = await getDoc(docRef)
@@ -32,6 +34,7 @@ const ContinueDrawing = () => {
                 getDownloadURL(ref(storage, imageUrlToDownload))
                     .then((url) => {
                         setImageUrl(url)
+                        setIsLoading(false)
                     })
                     .catch((error) => {
                         console.log(error)
@@ -42,17 +45,20 @@ const ContinueDrawing = () => {
             }
         };
         fetchData();
-        console.log()
 
-    }, [])
+    }, [id, isUserSignedIn])
 
     return (
         <>
-
-            {isUserSignedIn ?
-                <DrawingArea isNewDrawing={false} imageUrl={imageUrl} />
+            {isLoading ?
+                <>Loading</>
                 :
-                <div>Log in to draw!</div>}
+                (isUserSignedIn ?
+                    <DrawingArea isNewDrawing={false} imageUrl={imageUrl} />
+                    :
+                    <div>Log in to draw!</div>
+                )
+            }
 
         </>
     )

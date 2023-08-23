@@ -14,7 +14,6 @@ const StartDrawing = () => {
     return (
         <>
             <button onClick={() => auth.signOut()} />
-            {console.log("wat",)}
             {isUserSignedIn ?
                 <DrawingArea isNewDrawing={true} />
                 :

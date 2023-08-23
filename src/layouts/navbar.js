@@ -1,15 +1,17 @@
 import { Navbar, Nav, Container } from "react-bootstrap"
-import { Outlet, Link } from "react-router-dom"
-import { doc, getDoc } from "firebase/firestore";
-
-
+import { Outlet, Link, useNavigate } from "react-router-dom"
+import { collection, getDocs } from "firebase/firestore";
+import { db } from '../firebase-config'
 const NavBarExample = () => {
-    const getContinueDrawingURL = () => {
-        console.log("huh?")
-        const id = 1
-        const hardcodedId = "2f981207-8018-453c-b046-88b52da9027a"
-
-        return "/continueDrawing/" + hardcodedId;
+    const navigate = useNavigate();
+    const navigateToContinueDrawing = async () => {
+        const getId = async () => {
+            const querySnapshot = await getDocs(collection(db, "unfinishedDrawings"))
+            const randIndex = Math.floor(Math.random() * (querySnapshot.docs.length));
+            const id = querySnapshot.docs[randIndex].data().drawingId
+            navigate("/continueDrawing/" + id)
+        }
+        getId()
     }
 
     return (
@@ -21,7 +23,7 @@ const NavBarExample = () => {
                         <Nav className="me-auto">
                             <Nav.Link as={Link} to="/" >MainHome</Nav.Link>
                             <Nav.Link as={Link} to="/StartDrawing">Start Drawing</Nav.Link>
-                            <Nav.Link as={Link} to={getContinueDrawingURL()}>Continue Drawing</Nav.Link>
+                            <button onClick={navigateToContinueDrawing}>Continue Drawing</button>
                             <Nav.Link as={Link} to="/galery">Galery</Nav.Link>
                             <Nav.Link as={Link} to="/signup">SignUp</Nav.Link>
                         </Nav>

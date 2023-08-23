@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import Canvas from './Canvas'
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
@@ -16,19 +16,20 @@ const DrawingArea = ({ isNewDrawing, imageUrl = null }) => {
     }
     const uploadImage = () => {
         const storage = getStorage();
-        //const id = crypto.randomUUID()
-        const id = isNewDrawing ? "2f981207-8018 - 453c - b046 - 88b52da9027a" : "2f981207-8018 - 453c - b046 - 88b52da9027b"
+        const id = crypto.randomUUID()
         canvasRef.current.toBlob(function (blob) {
             const url = (isNewDrawing ? 'newDrawings/' : 'continuedDrawings/') + id + '.jpg'
             const storageRef = ref(storage, url);
             uploadBytes(storageRef, blob).then((snapshot) => {
-                console.log('Uploaded a blob or file!');
+                console.log('Uploaded drawing!');
             });
         });
         if (isNewDrawing) {
             saveImageId(id)
         }
     }
+    useEffect(() => {
+    }, [imageUrl])
 
     return (
         <>
