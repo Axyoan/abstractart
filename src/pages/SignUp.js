@@ -7,9 +7,9 @@ import "./loginform.css"
 
 
 export const SignUp = () => {
-  
- 
-//prueba de inicio sesion
+
+
+  //prueba de inicio sesion
 
 
   const [email, setEmail] = useState("");
@@ -26,7 +26,7 @@ export const SignUp = () => {
   const login = async () => {
     try {
       // const user = await createUserWithEmailAndPassword(auth, email, password);
-      const user = await signInWithEmailAndPassword(auth,email,password)
+      const user = await signInWithEmailAndPassword(auth, email, password)
 
     } catch (error) {
       console.error(error)
@@ -38,30 +38,23 @@ export const SignUp = () => {
       <div>
         <h1>Sign Up</h1>
         <h2>
-        <input placeholder='Email' onChange={(e) => { setEmail(e.target.value) }} />
+          <input placeholder='Email' onChange={(e) => { setEmail(e.target.value) }} />
         </h2>
         <h3>
-        <input placeholder='password' type='password' onChange={(e) => { setPassword(e.target.value) }} />
+          <input placeholder='password' type='password' onChange={(e) => { setPassword(e.target.value) }} />
         </h3>
-     
-      
-         <button onClick={register}>Create user</button>
-         
-         <button onClick={login}>Login</button>
 
-     
-      
+
+        <button onClick={register}>Create user</button>
+
+        <button onClick={login}>Login</button>
+
+
+
 
       </div>
-      
+
     </>
   )
 }
 
-      
-
-      </div>
-      
-    </>
-  )
-}
