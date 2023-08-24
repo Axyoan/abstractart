@@ -13,6 +13,8 @@ const StartDrawing = () => {
 
     return (
         <>
+            <div class="photoA"></div>
+
             {isUserSignedIn ?
                 <DrawingArea isNewDrawing={true} />
                 :
