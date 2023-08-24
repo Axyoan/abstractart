@@ -36,6 +36,8 @@ export const SignUp = () => {
   return (
     <>
       <div>
+        <div class="photoA"></div>
+
         <h1>Sign Up</h1>
         <h2>
           <input placeholder='Email' onChange={(e) => { setEmail(e.target.value) }} />
