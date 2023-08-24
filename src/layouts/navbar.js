@@ -57,7 +57,7 @@ const NavBarExample = () => {
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
-
+             <div class="photo"></div>
             <section>
                 <Outlet></Outlet>
             </section>
