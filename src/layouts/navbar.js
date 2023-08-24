@@ -13,7 +13,26 @@ const NavBarExample = () => {
         }
         getId()
     }
+    const navigateToGalery = async() => {
 
+            navigate("/galery/")
+
+    }
+    const navigateToStarDraw = async() => {
+
+        navigate("/StartDrawing/")
+
+}
+    const navigateToSignup = async() => {
+
+        navigate("/SignUp/")
+
+}
+    const navigateToMain = async() => {
+
+        navigate("/Home/")
+
+}
     return (
         <>
             <Navbar className="navBg" variant="light" expand="lg">
@@ -21,11 +40,13 @@ const NavBarExample = () => {
                     <Navbar.Brand as={Link} to="/" >Abstractart</Navbar.Brand>
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
-                            <Nav.Link as={Link} to="/" >MainHome</Nav.Link>
-                            <Nav.Link as={Link} to="/StartDrawing">Start Drawing</Nav.Link>
-                            <button onClick={navigateToContinueDrawing}>Continue Drawing</button>
-                            <Nav.Link as={Link} to="/galery">Galery</Nav.Link>
-                            <Nav.Link as={Link} to="/signup">SignUp</Nav.Link>
+                            <button onClick={navigateToMain} class="btn">Home</button>
+                            <button onClick={navigateToStarDraw} class="btn">Start Drawing</button>
+                            <button onClick={navigateToContinueDrawing} class="btn">Continue Drawing</button>
+                            <button onClick={navigateToGalery} class="btn">Galery</button>
+                            <button onClick={navigateToSignup} class="btn">SignUp</button>
+
+                            
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
@@ -38,3 +59,5 @@ const NavBarExample = () => {
     )
 }
 export default NavBarExample
+
+
