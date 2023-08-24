@@ -3,6 +3,8 @@ import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataReady }) => {
     const [areImagesReady, setAreImagesReady] = useState(false)
+    const [reload, setReload] = useState(false)
+
     const canvasContainerStyle = {
         position: "relative",
         left: "0px",
@@ -25,20 +27,26 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
             const firstImg = new Image();
             const secondImg = new Image();
             getDownloadURL(ref(storage, imageUrl[0])).then((firstUrl) => {
+                firstImg.src = firstUrl
+                firstImg.onload = function () {
+                    canvasContext.drawImage(firstImg, 0, 0);
+
+                };
+            }).then(() => {
                 getDownloadURL(ref(storage, imageUrl[1])).then((secondUrl) => {
-                    firstImg.src = firstUrl
                     secondImg.src = secondUrl
-                    firstImg.onload = function () {
-                        canvasContext.drawImage(firstImg, 0, 0);
-                        secondImg.onload = function () {
-                            canvasContext.drawImage(secondImg, 450, 0);
-                        };
+                    secondImg.onload = function () {
+                        canvasContext.drawImage(secondImg, 450, 0);
                     };
                 })
+            }).then((bruh) => {
+                setReload(true)
             })
         })
         setAreImagesReady(true)
-    }, [isDataReady])
+
+    }, [isDataReady, imagesUrls, reload])
+
 
     return (
         <>
