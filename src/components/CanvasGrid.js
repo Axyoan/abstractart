@@ -4,6 +4,7 @@ import { getStorage, ref, getDownloadURL } from "firebase/storage";
 const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataReady }) => {
     const [areImagesReady, setAreImagesReady] = useState(false)
     const [reload, setReload] = useState(false)
+    const [likeBtns, setLikeBtns] = useState([])
 
     const canvasContainerStyle = {
         position: "relative",
@@ -39,7 +40,8 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
                         canvasContext.drawImage(secondImg, 450, 0);
                     };
                 })
-            }).then((bruh) => {
+            }).then(() => {
+                setLikeBtns(Array.from({ length: imagesUrls.length }, () => false))
                 setReload(true)
             })
         })
@@ -48,19 +50,29 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
     }, [isDataReady, imagesUrls, reload])
 
 
+    const handleOnClickLike = (index) => {
+        const newLikes = likeBtns.map((k, i) => {
+            return i === index ? !k : k
+        });
+        setLikeBtns(newLikes)
+    }
+
     return (
         <>
             {
                 areImagesReady ?
                     Array.from({ length: count }, (_, index) =>
-                        <div style={canvasContainerStyle}><canvas
+                        <><div style={canvasContainerStyle}><canvas
                             key={index}
                             width={width}
                             height={height}
                             style={canvasStyle}
                             ref={el => canvasesRefs.current[index] = el}
                         />
-                        </div>)
+                        </div>
+                            <a style={likeBtnStyle} on onClick={() => handleOnClickLike(index)} className='btn'>Like<img src={likeBtns[index] ? "../../../assets/heart 2.svg" : "../../../assets/heart.svg"} /></a>
+                            <br /><br />
+                        </>)
 
                     :
                     <div>loading</div>
@@ -73,4 +85,12 @@ const canvasStyle = {
     border: "1px solid black",
     zIndex: "0"
 }
+
+const likeBtnStyle = {
+    backgroundColor: "white",
+    padding: "5px",
+    color: "black",
+    cursor: "pointer"
+}
+
 export default CanvasGrid
