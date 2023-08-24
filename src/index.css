@@ -26,8 +26,20 @@ body {
   background-size: 200px;
   background-repeat: no-repeat;
   background-position: top right;
+  margin-left: 50px;
   
 }
+.photoA{
+  background: url(../public/img/logo.png);
+  width: 200px;
+  height: 200px;
+  background-size: 200px;
+  background-repeat: no-repeat;
+  background-position: top right;
+  margin-left: 850px;
+  
+}
+
 
 
 span {
@@ -62,23 +74,19 @@ input[type=number] {
   justify-content: center;
   align-items: center;
 
-  animation: shaking 2s infinite;
+}
+.btn2{
+  height: 50px;
+  border-radius: 40px;
+  padding: 1em;
+  background-color: #6d47d9;
+  color: azure;
+  border: none;
+  display: center;
+  justify-content: center;
+  align-items: center;
+
 }
 
 
-@keyframes shaking {
-  
-  10% {
-    transform: scale(1.05) rotate(5deg);
-  }
-  20% {
-    transform: scale(1.05) rotate(-5deg);
-  }
-  30% {
-    transform: scale(1.05) rotate(5deg);
-  }
-  40% {
-    transform: none;
-  }
-}
 

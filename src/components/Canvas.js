@@ -102,7 +102,7 @@ const Canvas = ({ width, height, canvasRef, unfinishedCanvasRef, isNewDrawing, i
                     context.lineWidth = value
                 }}
             />
-            <button onClick={handleClearCanvasButton} class="btn"> eliminar canvas</button>
+            <button onClick={handleClearCanvasButton} class="btn2"> eliminar canvas</button>
         </>
     )
 }
