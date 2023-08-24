@@ -45,9 +45,9 @@ export const SignUp = () => {
         </h3>
 
 
-        <button onClick={register}>Create user</button>
+        <button onClick={register} class = "btnLg">Create user</button>
 
-        <button onClick={login}>Login</button>
+        <button onClick={login}class = "btnLg">Login</button>
 
 
 
