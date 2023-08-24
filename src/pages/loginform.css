@@ -60,3 +60,30 @@
     color: white;
     text-decoration: underline;
   }
+.btnLg{
+  height: 50px;
+  border-radius: 4px;
+  padding: 1em;
+  background-color: #ffffff;
+  color: rgb(78, 73, 152);
+  border: none;
+  display: center;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px ;
+
+}
+
+.btnUnLg{
+  height: 50px;
+  border-radius: 1px;
+  padding: 1em;
+  background-color: #6d47d9;
+  color: azure;
+  border: none;
+  display: center;
+  justify-content: center;
+  align-items: center;
+  margin-left: 900px;
+
+}
