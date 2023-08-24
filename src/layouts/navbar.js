@@ -2,8 +2,12 @@ import { Navbar, Nav, Container } from "react-bootstrap"
 import { Outlet, Link, useNavigate } from "react-router-dom"
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '../firebase-config'
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
 const NavBarExample = () => {
     const navigate = useNavigate();
+    const auth = getAuth()
+
     const navigateToContinueDrawing = async () => {
         const getId = async () => {
             const querySnapshot = await getDocs(collection(db, "unfinishedDrawings"))
@@ -45,6 +49,8 @@ const NavBarExample = () => {
                             <button onClick={navigateToContinueDrawing} class="btn">Continue Drawing</button>
                             <button onClick={navigateToGalery} class="btn">Galery</button>
                             <button onClick={navigateToSignup} class="btn">SignUp</button>
+                            <button onClick={() => auth.signOut()} class = "btnUnLg"> Unlogin</button>
+
 
                             
                         </Nav>
