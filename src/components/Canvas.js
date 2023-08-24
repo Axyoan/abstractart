@@ -73,23 +73,26 @@ const Canvas = ({ width, height, canvasRef, unfinishedCanvasRef, isNewDrawing, i
 
     return (
         <>
-            <div style={canvasContainerStyle}>
-                <canvas
-                    width={width}
-                    height={height}
-                    style={canvasStyle}
-                    onMouseDown={startDrawing}
-                    onMouseUp={finishDrawing}
-                    onMouseMove={draw}
-                    onMouseLeave={finishDrawing}
-                    ref={canvasRef} />
+            <div style={tempStyle}>
+                <div style={canvasContainerStyle}>
+                    <canvas
+                        width={width}
+                        height={height}
+                        style={canvasStyle}
+                        onMouseDown={startDrawing}
+                        onMouseUp={finishDrawing}
+                        onMouseMove={draw}
+                        onMouseLeave={finishDrawing}
+                        ref={canvasRef} />
 
-                <canvas
-                    width={50}
-                    height={height}
-                    ref={unfinishedCanvasRef}
-                    style={isNewDrawing ? canvasJoinStyle : canvasJoinStyleContinueDrawing}
-                />
+                    <canvas
+                        width={50}
+                        height={height}
+                        ref={unfinishedCanvasRef}
+                        style={isNewDrawing ? canvasJoinStyle : canvasJoinStyleContinueDrawing}
+                    />
+                </div>
+                <img src="../../../assets/pallete.jpg" height={200} width={100} />
             </div>
             <ReactSlider
                 min={0}
@@ -128,4 +131,13 @@ const canvasJoinStyleContinueDrawing = {
     left: "0px",
     top: "0px",
     zIndex: "-1",
+}
+
+const tempStyle = {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    marginLeft: "30%",
+    marginRight: "30%",
+
 }

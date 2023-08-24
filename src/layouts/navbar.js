@@ -49,7 +49,7 @@ const NavBarExample = () => {
                             <button onClick={navigateToContinueDrawing} class="btn">Continue Drawing</button>
                             <button onClick={navigateToGallery} class="btn">Gallery</button>
                             <button onClick={navigateToSignup} class="btn">SignUp</button>
-                            <button onClick={() => auth.signOut()} class="btnUnLg"> Unlogin</button>
+                            <button onClick={() => auth.signOut()} class="btnSignOut"> SignOut</button>
 
 
 

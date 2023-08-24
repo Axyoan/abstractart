@@ -45,10 +45,15 @@ const DrawingArea = ({ isNewDrawing, imageUrl = null, imageId = null }) => {
 
     return (
         <>
-            <Canvas width={isNewDrawing ? 500 : 600} height={500} canvasRef={canvasRef} unfinishedCanvasRef={unfinishedCanvasRef} isNewDrawing={isNewDrawing} imageUrl={imageUrl} />
+            <div style={tempStyle}>
+                <Canvas width={isNewDrawing ? 500 : 600} height={500} canvasRef={canvasRef} unfinishedCanvasRef={unfinishedCanvasRef} isNewDrawing={isNewDrawing} imageUrl={imageUrl} />
+            </div>
             <button onClick={uploadImage} class="btn2" >Upload image</button>
         </>
     )
+}
+
+const tempStyle = {
 }
 
 export default DrawingArea
