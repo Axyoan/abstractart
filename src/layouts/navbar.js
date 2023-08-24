@@ -24,7 +24,7 @@ const NavBarExample = () => {
                             <Nav.Link as={Link} to="/" >MainHome</Nav.Link>
                             <Nav.Link as={Link} to="/StartDrawing">Start Drawing</Nav.Link>
                             <button onClick={navigateToContinueDrawing}>Continue Drawing</button>
-                            <Nav.Link as={Link} to="/galery">Galery</Nav.Link>
+                            <Nav.Link as={Link} to="/gallery">Gallery</Nav.Link>
                             <Nav.Link as={Link} to="/signup">SignUp</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>

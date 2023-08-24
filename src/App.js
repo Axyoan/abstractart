@@ -4,7 +4,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { SignUp } from './pages/SignUp';
 import LogIn from './pages/LogIn'
 import MainHome from './pages/MainHome';
-import Galery from './pages/galery';
+import Gallery from './pages/Gallery';
 import NavBarExample from './layouts/navbar';
 import StartDrawing from './pages/StartDrawing';
 import ContinueDrawing from './pages/ContinueDrawing'
@@ -17,7 +17,7 @@ function App() {
       <Routes>
         <Route path='/' element={<NavBarExample />}>
           <Route index element={<MainHome />} />
-          <Route path='galery' element={<Galery />} />
+          <Route path='gallery' element={<Gallery />} />
           <Route path='startdrawing' element={<StartDrawing />} />
           <Route path='signup' element={<SignUp />} />
           <Route path='login' element={<LogIn />} />
