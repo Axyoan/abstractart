@@ -63,6 +63,18 @@ input[type=number] {
   align-items: center;
 
 }
+.btn2{
+  height: 50px;
+  border-radius: 40px;
+  padding: 1em;
+  background-color: #6d47d9;
+  color: azure;
+  border: none;
+  display: center;
+  justify-content: center;
+  align-items: center;
+
+}
 
 
 
