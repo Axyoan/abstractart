@@ -50,7 +50,7 @@ const ContinueDrawing = () => {
 
     return (
         <>
-         <div class="photo"></div>
+         <div class="photoA"></div>
 
             {isLoading ?
                 <>Loading</>
