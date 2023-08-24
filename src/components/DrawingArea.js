@@ -46,7 +46,7 @@ const DrawingArea = ({ isNewDrawing, imageUrl = null, imageId = null }) => {
     return (
         <>
             <Canvas width={isNewDrawing ? 500 : 600} height={500} canvasRef={canvasRef} unfinishedCanvasRef={unfinishedCanvasRef} isNewDrawing={isNewDrawing} imageUrl={imageUrl} />
-            <button onClick={uploadImage}>Upload image</button>
+            <button onClick={uploadImage} class="btn2" >Upload image</button>
         </>
     )
 }
