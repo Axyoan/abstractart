@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import { doc, setDoc, getDoc } from "firebase/firestore";
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
+
+import { db } from '../firebase-config'
+
 
 const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataReady }) => {
     const [areImagesReady, setAreImagesReady] = useState(false)
@@ -18,9 +23,28 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
         zIndex: "1"
     }
 
+    const getDrawingLikeURL = (index) => {
+        const firstUrl = imagesUrls[index][0].split('/')[1].split('.')[0]
+        const secondUrl = imagesUrls[index][1].split('/')[1].split('.')[0]
+        return firstUrl + "_" + secondUrl
+    }
+
+    const initializeLikes = async () => {
+        const auth = getAuth();
+        if (auth.currentUser) {
+            const newLikes = await Promise.all(imagesUrls.map(async (_, index) => {
+                const docRef = doc(db, auth.currentUser.uid + "_likes", getDrawingLikeURL(index));
+                const docSnap = await getDoc(docRef);
+                return docSnap.exists() ? docSnap.data().val : false
+            }))
+            setLikeBtns(newLikes)
+        }
+    }
+
     useEffect(() => {
         console.log("grid rendered")
         const storage = getStorage();
+        initializeLikes()
         imagesUrls.forEach((imageUrl, index) => {
             const canvas = canvasesRefs.current[index]
             if (canvas == null) return
@@ -41,7 +65,6 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
                     };
                 })
             }).then(() => {
-                setLikeBtns(Array.from({ length: imagesUrls.length }, () => false))
                 setReload(true)
             })
         })
@@ -49,8 +72,20 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
 
     }, [isDataReady, imagesUrls, reload])
 
+    const updateLike = async (index, newVal) => {
+        const auth = getAuth();
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setDoc(doc(db, user.uid + "_likes", getDrawingLikeURL(index)), {
+                    val: newVal
+                });
+            }
+        });
+
+    }
 
     const handleOnClickLike = (index) => {
+        updateLike(index, !likeBtns[index])
         const newLikes = likeBtns.map((k, i) => {
             return i === index ? !k : k
         });
