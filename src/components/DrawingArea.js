@@ -3,22 +3,24 @@ import Canvas from './Canvas'
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from '../firebase-config'
+import { getAuth } from 'firebase/auth'
 
 const DrawingArea = ({ isNewDrawing, imageUrl = null, imageId = null }) => {
 
     const canvasRef = useRef(null)
     const unfinishedCanvasRef = useRef(null)
-
-    const saveImageId = async (id) => {
-        await setDoc(doc(db, "unfinishedDrawings", id), {
+    const auth = getAuth()
+    const saveImage = async (id, isNewDrawing) => {
+        await setDoc(doc(db, isNewDrawing ? "unfinishedDrawings" : "completedDrawings", id), {
             drawingId: id,
+            userId: auth.currentUser.uid
         });
     }
 
     const associateImagesInDB = async (secondId) => {
-        await setDoc(doc(db, "completedDrawingsIds", imageId + secondId), {
+        await setDoc(doc(db, "associatedDrawings", imageId + secondId), {
             firstId: imageId,
-            secondId: secondId
+            secondId: secondId,
         });
 
     }
@@ -33,10 +35,8 @@ const DrawingArea = ({ isNewDrawing, imageUrl = null, imageId = null }) => {
                 console.log('Uploaded drawing!');
             });
         });
-        if (isNewDrawing) {
-            saveImageId(id)
-        }
-        else {
+        saveImage(id, isNewDrawing)
+        if (!isNewDrawing) {
             associateImagesInDB(id)
         }
     }
