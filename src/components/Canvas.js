@@ -1,9 +1,119 @@
 import React, { useEffect, useRef, useState } from 'react'
 import ReactSlider from 'react-slider'
 import './buttonColors.css'
+import context from 'react-bootstrap/esm/AccordionContext'
 
 
 const Canvas = ({ width, height, canvasRef, unfinishedCanvasRef, isNewDrawing, imageUrl = null }) => {
+   
+function whiteColor()
+{
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d")
+    context.strokeStyle ="#ffffff"
+}
+function blackColor()
+{
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d")
+    context.strokeStyle ="#000000"
+}
+function redColor()
+{
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d")
+    context.strokeStyle ="#cc1919"
+}
+function blueColor()
+{
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d")
+    context.strokeStyle ="#2934c6"
+}
+function grayColor()
+{
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d")
+    context.strokeStyle ="#717171"
+}
+function yellowColor()
+{
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d")
+    context.strokeStyle ="#fffb14"
+}
+function orangeColor()
+{
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d")
+    context.strokeStyle ="#fa9906"
+}
+function purpleColor()
+{
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d")
+    context.strokeStyle ="#5e115f"
+}
+function cyanColor()
+{
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d")
+    context.strokeStyle ="#1ac8e3"
+}
+function kirbyColor()
+{
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d")
+    context.strokeStyle ="#e4a3d1"
+}
+function pinkColor()
+{
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d")
+    context.strokeStyle ="#e32ebc"
+}
+function coffeeColor()
+{
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d")
+    context.strokeStyle ="#463e32"
+}
+function sandColor()
+{
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d")
+    context.strokeStyle ="#c3c19e"
+}
+function greenColor()
+{
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d")
+    context.strokeStyle ="#1ae33f"
+}
+function greenPColor()
+{
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d")
+    context.strokeStyle ="#067608"
+}
+function bluePColor()
+{
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d")
+    context.strokeStyle ="#27cce1"
+}
+function brownColor()
+{
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d")
+    context.strokeStyle ="#392a10"
+}
+function violetColor()
+{
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d")
+    context.strokeStyle ="#a578c5"
+}
 
     const contextRef = useRef(null)
     const canvasContainerStyle = {
@@ -48,6 +158,8 @@ const Canvas = ({ width, height, canvasRef, unfinishedCanvasRef, isNewDrawing, i
         context.clearRect(0, 0, canvas.width, canvas.height);
     }
 
+   
+    
 
     useEffect(() => {
         console.log("render")
@@ -95,28 +207,28 @@ const Canvas = ({ width, height, canvasRef, unfinishedCanvasRef, isNewDrawing, i
                     />
                 </div>
                 <p1>
-                <button class="white"></button>
-                <button class="black"></button>
-                <button class="gray"></button>
-                <button class="blue"></button>
-                <button class="red"></button>
-                <button class="pink"></button>
+                <button onClick={whiteColor}class="white"></button>
+                <button onClick={blackColor}class="black"></button>
+                <button onClick={grayColor} class="gray"></button>
+                <button onClick={blueColor} class="blue"></button>
+                <button onClick={redColor} class="red"></button>
+                <button onClick={pinkColor} class="pink"></button>
                 </p1>
                 <p2>
-                <button class="green"></button>
-                <button class="greenP"></button>
-                <button class="blueP"></button>
-                <button class="yellow"></button>
-                <button class="orange"></button>
-                <button class="purple"></button>
+                <button onClick={greenColor}class="green"></button>
+                <button onClick={greenPColor}class="greenP"></button>
+                <button onClick={bluePColor}class="blueP"></button>
+                <button onClick={yellowColor}class="yellow"></button>
+                <button onClick={orangeColor} class="orange"></button>
+                <button onClick={purpleColor}class="purple"></button>
                 </p2>
                 <p3>
-                <button class="brown"></button>
-                <button class="kirby"></button>
-                <button class="violet"></button>
-                <button class="coffee"></button>
-                <button class="cyan"></button>
-                <button class="sand"></button>
+                <button onClick={brownColor}class="brown"></button>
+                <button onClick={kirbyColor}class="kirby"></button>
+                <button onClick={violetColor}class="violet"></button>
+                <button onClick={coffeeColor} class="coffee"></button>
+                <button onClick={cyanColor}class="cyan"></button>
+                <button onClick={sandColor} class="sand"></button>
                 </p3>
               
                 
@@ -170,3 +282,4 @@ const tempStyle = {
     marginRight: "30%",
 
 }
+
