@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import ReactSlider from 'react-slider'
+import './buttonColors.css'
+
 
 const Canvas = ({ width, height, canvasRef, unfinishedCanvasRef, isNewDrawing, imageUrl = null }) => {
 
@@ -92,8 +94,35 @@ const Canvas = ({ width, height, canvasRef, unfinishedCanvasRef, isNewDrawing, i
                         style={isNewDrawing ? canvasJoinStyle : canvasJoinStyleContinueDrawing}
                     />
                 </div>
-                <img src="../../../assets/pallete.jpg" height={200} width={100} />
-            </div>
+                <p1>
+                <button class="white"></button>
+                <button class="black"></button>
+                <button class="gray"></button>
+                <button class="blue"></button>
+                <button class="red"></button>
+                <button class="pink"></button>
+                </p1>
+                <p2>
+                <button class="green"></button>
+                <button class="greenP"></button>
+                <button class="blueP"></button>
+                <button class="yellow"></button>
+                <button class="orange"></button>
+                <button class="purple"></button>
+                </p2>
+                <p3>
+                <button class="brown"></button>
+                <button class="kirby"></button>
+                <button class="violet"></button>
+                <button class="coffee"></button>
+                <button class="cyan"></button>
+                <button class="sand"></button>
+                </p3>
+              
+                
+              
+                </div>
+            
             <ReactSlider
                 min={0}
                 max={50}
