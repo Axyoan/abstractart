@@ -114,6 +114,31 @@ function violetColor()
     const context = canvas.getContext("2d")
     context.strokeStyle ="#a578c5"
 }
+function pen1()
+{
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d")
+    context.lineWidth = 5
+}
+function pen2()
+{
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d")
+    context.lineWidth = 20
+}
+function pen3()
+{
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d")
+    context.lineWidth = 35
+}
+function pen4()
+{
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d")
+    context.lineWidth = 50
+}
+
 
     const contextRef = useRef(null)
     const canvasContainerStyle = {
@@ -230,22 +255,17 @@ function violetColor()
                 <button onClick={cyanColor}class="cyan"></button>
                 <button onClick={sandColor} class="sand"></button>
                 </p3>
-              
-                
-              
+                <p4>
+                <button onClick={pen1}class="pen1"></button>
+                <button onClick={pen2}class="pen2"></button>
+                <button onClick={pen3}class="pen3"></button>
+                <button onClick={pen4}class="pen4"></button>
+
+                </p4>
+        
                 </div>
             
-            <ReactSlider
-                min={0}
-                max={50}
-                defaultValue={5}
-                renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
-                onChange={(value, _) => {
-                    const canvas = canvasRef.current;
-                    const context = canvas.getContext("2d")
-                    context.lineWidth = value
-                }}
-            />
+            
             <button onClick={handleClearCanvasButton} class="btn2"> eliminar canvas</button>
         </>
     )
@@ -282,4 +302,3 @@ const tempStyle = {
     marginRight: "30%",
 
 }
-
