@@ -256,6 +256,8 @@ function pen4()
                 <button onClick={sandColor} class="sand"></button>
                 </p3>
                 <p4>
+                <button onClick ={whiteColor} className='eraser'><img src="../../../assets/eraser.svg"/></button>
+                <button onClick ={handleClearCanvasButton} className='eraser'><img src="../../../assets/trash.svg"/></button>  
                 <button onClick={pen1}class="pen1"></button>
                 <button onClick={pen2}class="pen2"></button>
                 <button onClick={pen3}class="pen3"></button>
