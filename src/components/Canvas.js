@@ -268,7 +268,6 @@ function pen4()
                 </div>
             
             
-            <button onClick={handleClearCanvasButton} class="btn2"> eliminar canvas</button>
         </>
     )
 }
