@@ -256,6 +256,25 @@
     bottom: 0;
     z-index: -1;
   }
+
+.eraser{
+    border-radius: 100px;
+    padding: 0.2em;
+  
+    content: "";
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+  }
+  .trash{
+    border-radius: 100px;
+    padding: 0.2em;
+  
+    content: "";
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+  }
   
   
   
