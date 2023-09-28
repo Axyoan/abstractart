@@ -100,7 +100,7 @@ function bluePColor()
 {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d")
-    context.strokeStyle ="#27cce1"
+    context.strokeStyle ="#1d99aa"
 }
 function brownColor()
 {
