@@ -183,9 +183,6 @@ function pen4()
         context.clearRect(0, 0, canvas.width, canvas.height);
     }
 
-   
-    
-
     useEffect(() => {
         console.log("render")
         const canvas = canvasRef.current;
@@ -231,6 +228,7 @@ function pen4()
                         style={isNewDrawing ? canvasJoinStyle : canvasJoinStyleContinueDrawing}
                     />
                 </div>
+                <div className='color-container'>
                 <p1>
                 <button onClick={whiteColor}class="white"></button>
                 <button onClick={blackColor}class="black"></button>
@@ -256,14 +254,21 @@ function pen4()
                 <button onClick={sandColor} class="sand"></button>
                 </p3>
                 <p4>
+                     
                 <button onClick ={whiteColor} className='eraser'><img src="../../../assets/eraser.svg"/></button>
                 <button onClick ={handleClearCanvasButton} className='eraser'><img src="../../../assets/trash.svg"/></button>  
                 <button onClick={pen1}class="pen1"></button>
                 <button onClick={pen2}class="pen2"></button>
                 <button onClick={pen3}class="pen3"></button>
                 <button onClick={pen4}class="pen4"></button>
+                            
+                        
 
                 </p4>
+
+
+                </div>
+                
         
                 </div>
             
