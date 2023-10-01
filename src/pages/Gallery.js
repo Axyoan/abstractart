@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { collection, getDocs, getCountFromServer } from "firebase/firestore";
-import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { db } from '../firebase-config'
-import CanvasGrid from '../components/CanvasGrid'
+import CanvasGrid from '../components/CanvasGrid';
 
 const Galery = () => {
     const [imagesUrls, setImagesUrls] = useState([])

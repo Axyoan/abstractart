@@ -74,10 +74,21 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
 
     const updateLike = async (index, newVal) => {
         const auth = getAuth();
+        const firstId = imagesUrls[index][0].split('/')[1].split('.')[0]
+        const secondSecond = imagesUrls[index][1].split('/')[1].split('.')[0]
+
+        const qryUnfinished = await getDoc(doc(db, "unfinishedDrawings", firstId))
+        const qryCompleted = await getDoc(doc(db, "completedDrawings", secondSecond))
+        if (!qryUnfinished.exists() || !qryCompleted.exists()) {
+            console.error("error fetching drawing ids")
+            return
+        }
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 setDoc(doc(db, user.uid + "_likes", getDrawingLikeURL(index)), {
-                    val: newVal
+                    val: newVal,
+                    firstUserId: qryUnfinished.data().userId,
+                    secondUserId: qryCompleted.data().userId
                 });
             }
         });
