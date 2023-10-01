@@ -12,11 +12,11 @@ const Galery = () => {
     const canvasesRefs = useRef([])
 
     const loadAllImages = async () => {
-        const queryCountSnapshot = await getCountFromServer(collection(db, "completedDrawingsIds"))
+        const queryCountSnapshot = await getCountFromServer(collection(db, "associatedDrawings"))
         const newCanvasCount = queryCountSnapshot.data().count
         setCanvasCount(newCanvasCount)
         canvasesRefs.current = canvasesRefs.current.slice(0, newCanvasCount);
-        const querySnapshot = await getDocs(collection(db, "completedDrawingsIds"))
+        const querySnapshot = await getDocs(collection(db, "associatedDrawings"))
 
         const newArr = querySnapshot.docs.map((doc) => {
             const firstId = doc.data().firstId
