@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 
 import { db } from '../firebase-config'
@@ -37,9 +37,12 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
         const auth = getAuth();
         if (auth.currentUser) {
             const newLikes = await Promise.all(imagesUrls.map(async (_, index) => {
-                let docRef = doc(db, auth.currentUser.uid + "_drawing_likes", getDrawingLikeURL(index));
+                const docRef = doc(db, "drawing_likes", auth.currentUser.uid);
                 const docSnap = await getDoc(docRef);
-                return docSnap.exists() ? docSnap.data().val : false
+                return (docSnap.exists() && docSnap.data().hasOwnProperty(getDrawingLikeURL(index)))
+                    ?
+                    docSnap.data()[getDrawingLikeURL(index)]
+                    : false
             }))
             setLikeBtns(newLikes)
         }
@@ -91,32 +94,56 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 // update likes of the drawing itself, not the individual users
-                let docRef = doc(db, auth.currentUser.uid + "_drawing_likes", getDrawingLikeURL(index));
-                setDoc(docRef, {
-                    val: newVal
-                })
-
+                let docRef = doc(db, "drawing_likes", auth.currentUser.uid);
+                const drawingId = getDrawingLikeURL(index)
+                if ((await getDoc(docRef)).exists()) {
+                    updateDoc(docRef, {
+                        [drawingId]: newVal
+                    })
+                }
+                else {
+                    setDoc(docRef, {
+                        [drawingId]: newVal
+                    })
+                }
                 // Update likes of first artist
-                docRef = doc(db, user.uid + "_user_likes", qryUnfinished.data().userId)
+                docRef = doc(db, "user_likes", auth.currentUser.uid)
                 let qryDoc = await getDoc(docRef)
                 let newLikeCounter = newVal ? 1 : 0
                 if (qryDoc.exists()) {
-                    newLikeCounter = qryDoc.data().likeCounter + (newVal ? 1 : -1)
+                    newLikeCounter = 0
+                    if (qryDoc.data().hasOwnProperty(qryUnfinished.data().userId))
+                        newLikeCounter = qryDoc.data()[qryUnfinished.data().userId]
+
+                    newLikeCounter += (newVal ? 1 : -1)
+                    updateDoc((docRef), {
+                        [qryUnfinished.data().userId]: newLikeCounter
+                    });
                 }
-                setDoc((docRef), {
-                    likeCounter: newLikeCounter
-                });
+                else {
+                    setDoc((docRef), {
+                        [qryUnfinished.data().userId]: newLikeCounter
+                    });
+                }
 
                 // Update likes of second artist
-                docRef = doc(db, user.uid + "_user_likes", qryCompleted.data().userId)
+                docRef = doc(db, "user_likes", auth.currentUser.uid)
                 qryDoc = await getDoc(docRef)
                 newLikeCounter = newVal ? 1 : 0
                 if (qryDoc.exists()) {
-                    newLikeCounter = qryDoc.data().likeCounter + + (newVal ? 1 : -1)
+                    newLikeCounter = 0
+                    if (qryDoc.data().hasOwnProperty(qryCompleted.data().userId))
+                        newLikeCounter = qryDoc.data()[qryCompleted.data().userId]
+                    newLikeCounter += (newVal ? 1 : -1)
+                    updateDoc((docRef), {
+                        [qryCompleted.data().userId]: newLikeCounter
+                    });
                 }
-                setDoc((docRef), {
-                    likeCounter: newLikeCounter
-                });
+                else {
+                    setDoc((docRef), {
+                        [qryCompleted.data().userId]: newLikeCounter
+                    });
+                }
             }
         });
 
