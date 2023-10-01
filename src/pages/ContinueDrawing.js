@@ -58,7 +58,7 @@ const ContinueDrawing = () => {
                 (isUserSignedIn ?
                     <DrawingArea isNewDrawing={false} imageUrl={imageUrl} imageId={id} />
                     :
-                    <div>Log in to draw!</div>
+                    <div>Log in to draw!</div> 
                 )
             }
 

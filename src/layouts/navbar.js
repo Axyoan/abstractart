@@ -7,12 +7,18 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 const NavBarExample = () => {
     const navigate = useNavigate();
     const auth = getAuth()
-
     const navigateToContinueDrawing = async () => {
         const getId = async () => {
-            const querySnapshot = await getDocs(collection(db, "unfinishedDrawings"))
-            const randIndex = Math.floor(Math.random() * (querySnapshot.docs.length));
-            const id = querySnapshot.docs[randIndex].data().drawingId
+            const currentUserId = auth.currentUser?.uid
+            var id 
+            var userId = currentUserId
+            while(userId === currentUserId) { 
+                const querySnapshot = await getDocs(collection(db, "unfinishedDrawings"))
+                const randIndex = Math.floor(Math.random() * (querySnapshot.docs.length));
+                id = querySnapshot.docs[randIndex].data().drawingId
+                userId = querySnapshot.docs[randIndex].data().userId
+                console.log("...Wating")
+            } 
             navigate("/continueDrawing/" + id)
         }
         getId()
