@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import Canvas from './Canvas'
 import { getStorage, ref, uploadBytes } from "firebase/storage";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import { db } from '../firebase-config'
 import { getAuth } from 'firebase/auth'
 
@@ -25,6 +25,19 @@ const DrawingArea = ({ isNewDrawing, imageUrl = null, imageId = null }) => {
 
     }
 
+    const increaseImageCounter = async (userId) => {
+        const docRef = doc(db, "extraUserData", userId)
+        const qry = await getDoc(doc(db, "extraUserData", userId))
+        let prevCnt = 0
+        if (qry.exists()) {
+            prevCnt = qry.data().totalImagesDrawn
+        }
+        await setDoc(docRef, {
+            totalImagesDrawn: prevCnt + 1
+        });
+
+    }
+
     const uploadImage = () => {
         const storage = getStorage();
         const id = crypto.randomUUID()
@@ -36,6 +49,7 @@ const DrawingArea = ({ isNewDrawing, imageUrl = null, imageId = null }) => {
             });
         });
         saveImage(id, isNewDrawing)
+        increaseImageCounter(auth.currentUser.uid)
         if (!isNewDrawing) {
             associateImagesInDB(id)
         }

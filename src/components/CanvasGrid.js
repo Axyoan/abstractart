@@ -83,13 +83,32 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
             console.error("error fetching drawing ids")
             return
         }
-        onAuthStateChanged(auth, (user) => {
+        onAuthStateChanged(auth, async (user) => {
             if (user) {
-                setDoc(doc(db, user.uid + "_likes", getDrawingLikeURL(index)), {
-                    val: newVal,
-                    firstUserId: qryUnfinished.data().userId,
-                    secondUserId: qryCompleted.data().userId
+                let docRef = doc(db, user.uid + "_likes", qryUnfinished.data().userId)
+                let qryDoc = await getDoc(docRef)
+                let newLikeCounter = newVal ? 1 : 0
+                if (qryDoc.exists()) {
+                    console.log("bruh", qryDoc)
+                    newLikeCounter = qryDoc.data().likeCounter + (newVal ? 1 : -1)
+                }
+                setDoc((docRef), {
+                    likeCounter: newLikeCounter
                 });
+
+                docRef = doc(db, user.uid + "_likes", qryCompleted.data().userId)
+                qryDoc = await getDoc(docRef)
+                newLikeCounter = newVal ? 1 : 0
+                if (qryDoc.exists()) {
+                    console.log("bruh", qryDoc)
+                    newLikeCounter = qryDoc.data().likeCounter + + (newVal ? 1 : -1)
+                }
+                setDoc((docRef), {
+                    likeCounter: newLikeCounter
+                });
+
+                docRef = doc(db, user.uid + "_likes", qryCompleted.data().userId)
+
             }
         });
 
