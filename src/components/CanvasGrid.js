@@ -29,11 +29,15 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
         return firstUrl + "_" + secondUrl
     }
 
+    const splitUrl = (str) => {
+        return str.split('/')[1].split('.')[0]
+    }
+
     const initializeLikes = async () => {
         const auth = getAuth();
         if (auth.currentUser) {
             const newLikes = await Promise.all(imagesUrls.map(async (_, index) => {
-                const docRef = doc(db, auth.currentUser.uid + "_likes", getDrawingLikeURL(index));
+                let docRef = doc(db, auth.currentUser.uid + "_drawing_likes", getDrawingLikeURL(index));
                 const docSnap = await getDoc(docRef);
                 return docSnap.exists() ? docSnap.data().val : false
             }))
@@ -74,8 +78,9 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
 
     const updateLike = async (index, newVal) => {
         const auth = getAuth();
-        const firstId = imagesUrls[index][0].split('/')[1].split('.')[0]
-        const secondSecond = imagesUrls[index][1].split('/')[1].split('.')[0]
+        const firstId = splitUrl(imagesUrls[index][0])
+
+        const secondSecond = splitUrl(imagesUrls[index][1])
 
         const qryUnfinished = await getDoc(doc(db, "unfinishedDrawings", firstId))
         const qryCompleted = await getDoc(doc(db, "completedDrawings", secondSecond))
@@ -85,30 +90,33 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
         }
         onAuthStateChanged(auth, async (user) => {
             if (user) {
-                let docRef = doc(db, user.uid + "_likes", qryUnfinished.data().userId)
+                // update likes of the drawing itself, not the individual users
+                let docRef = doc(db, auth.currentUser.uid + "_drawing_likes", getDrawingLikeURL(index));
+                setDoc(docRef, {
+                    val: newVal
+                })
+
+                // Update likes of first artist
+                docRef = doc(db, user.uid + "_user_likes", qryUnfinished.data().userId)
                 let qryDoc = await getDoc(docRef)
                 let newLikeCounter = newVal ? 1 : 0
                 if (qryDoc.exists()) {
-                    console.log("bruh", qryDoc)
                     newLikeCounter = qryDoc.data().likeCounter + (newVal ? 1 : -1)
                 }
                 setDoc((docRef), {
                     likeCounter: newLikeCounter
                 });
 
-                docRef = doc(db, user.uid + "_likes", qryCompleted.data().userId)
+                // Update likes of second artist
+                docRef = doc(db, user.uid + "_user_likes", qryCompleted.data().userId)
                 qryDoc = await getDoc(docRef)
                 newLikeCounter = newVal ? 1 : 0
                 if (qryDoc.exists()) {
-                    console.log("bruh", qryDoc)
                     newLikeCounter = qryDoc.data().likeCounter + + (newVal ? 1 : -1)
                 }
                 setDoc((docRef), {
                     likeCounter: newLikeCounter
                 });
-
-                docRef = doc(db, user.uid + "_likes", qryCompleted.data().userId)
-
             }
         });
 
