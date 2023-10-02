@@ -1,20 +1,25 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Canvas from './Canvas'
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { db } from '../firebase-config'
 import { getAuth } from 'firebase/auth'
+import Alert from '@mui/material/Alert';
+import Collapse from '@mui/material/Collapse';
 
 const DrawingArea = ({ isNewDrawing, imageUrl = null, imageId = null }) => {
-
+    const [uploaded, setUploaded] = useState(false)
     const canvasRef = useRef(null)
     const unfinishedCanvasRef = useRef(null)
     const auth = getAuth()
+
     const saveImage = async (id, isNewDrawing) => {
         await setDoc(doc(db, isNewDrawing ? "unfinishedDrawings" : "completedDrawings", id), {
             drawingId: id,
             userId: auth.currentUser.uid
         });
+        setUploaded (true);
+        
     }
 
     const associateImagesInDB = async (secondId) => {
@@ -63,6 +68,9 @@ const DrawingArea = ({ isNewDrawing, imageUrl = null, imageId = null }) => {
                 <Canvas width={isNewDrawing ? 500 : 600} height={500} canvasRef={canvasRef} unfinishedCanvasRef={unfinishedCanvasRef} isNewDrawing={isNewDrawing} imageUrl={imageUrl} />
             </div>
             <button onClick={uploadImage} class="btn2" >Upload image</button>
+            <Collapse in={uploaded}>
+          <Alert variant="filled" severity='success' onClose={() => {setUploaded(false)}}>Draw uploaded successfully</Alert>
+        </Collapse>
         </>
     )
 }

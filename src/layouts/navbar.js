@@ -50,6 +50,12 @@ const NavBarExample = () => {
         navigate("/Home/")
 
     }
+
+    const signOut = async () => {
+        auth.signOut()
+        navigate("/Home/")
+    }
+
     return (
         <>
             <Navbar className="navBg" variant="light" expand="lg">
@@ -63,9 +69,7 @@ const NavBarExample = () => {
                             <button onClick={navigateToGallery} class="btn">Gallery</button>
                             <button onClick={navigateToSignup} class="btn">SignUp</button>
                             <button onClick={fetchAPI} class="btn"> api test</button>
-                            <button onClick={() => auth.signOut()} class="btnSignOut"> SignOut</button>
-
-
+                            <button onClick={signOut} class="btnSignOut"> SignOut</button>
 
                         </Nav>
                     </Navbar.Collapse>

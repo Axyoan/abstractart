@@ -17,6 +17,7 @@ function App() {
       <Routes>
         <Route path='/' element={<NavBarExample />}>
           <Route index element={<MainHome />} />
+          <Route path='Home/:status' element={<MainHome />} />
           <Route path='gallery' element={<Gallery />} />
           <Route path='startdrawing' element={<StartDrawing />} />
           <Route path='signup' element={<SignUp />} />
