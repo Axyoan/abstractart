@@ -10,17 +10,7 @@ const NavBarExample = () => {
     const auth = getAuth()
 
     const fetchAPI = async () => {
-        let colRef = collection(db, auth.currentUser.uid + "_user_likes");
-        let snapshot = await getDocs(colRef);
-        const data = { likes: {}, drawingsCnt: {} }
-        snapshot.docs.forEach(doc => { data.likes[doc.id] = doc.data().likeCounter })
-
-        colRef = collection(db, "extraUserData");
-        snapshot = await getDocs(colRef);
-        snapshot.docs.forEach(doc => { data.drawingsCnt[doc.id] = doc.data().totalImagesDrawn })
-
-        console.log(data)
-        axios.get('http://localhost:5000/hello', { params: data })
+        axios.get('http://localhost:5000/hello?userId=' + auth.currentUser.uid)
             .then(response => console.log("response from api: ", response.data)).catch(e => console.log(e))
     }
 
