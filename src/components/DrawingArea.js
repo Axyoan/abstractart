@@ -18,8 +18,8 @@ const DrawingArea = ({ isNewDrawing, imageUrl = null, imageId = null, firstUserI
             drawingId: id,
             userId: auth.currentUser.uid
         });
-        setUploaded (true);
-        
+        setUploaded(true);
+
     }
 
     const associateImagesInDB = async (secondId) => {
@@ -54,7 +54,6 @@ const DrawingArea = ({ isNewDrawing, imageUrl = null, imageId = null, firstUserI
             });
         });
         saveImage(id, isNewDrawing)
-        increaseImageCounter(auth.currentUser.uid)
         if (!isNewDrawing) {
             increaseImageCounter(auth.currentUser.uid)
             increaseImageCounter(firstUserId)
@@ -71,8 +70,8 @@ const DrawingArea = ({ isNewDrawing, imageUrl = null, imageId = null, firstUserI
             </div>
             <button onClick={uploadImage} class="btn2" >Upload image</button>
             <Collapse in={uploaded}>
-          <Alert variant="filled" severity='success' onClose={() => {setUploaded(false)}}>Draw uploaded successfully</Alert>
-        </Collapse>
+                <Alert variant="filled" severity='success' onClose={() => { setUploaded(false) }}>Draw uploaded successfully</Alert>
+            </Collapse>
         </>
     )
 }
