@@ -12,6 +12,7 @@ const ContinueDrawing = () => {
     const auth = getAuth()
     const [isUserSignedIn, setIsUserSignedIn] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
+    const [firstUserId, setFirstUserId] = useState(null)
 
     onAuthStateChanged(auth, (u) => {
         setIsUserSignedIn(u != null)
@@ -28,6 +29,7 @@ const ContinueDrawing = () => {
 
         const fetchData = async () => {
             const newDocSnap = await getDoc(docRef)
+            setFirstUserId(newDocSnap.data().userId)
             if (newDocSnap.exists()) {
                 const storage = getStorage();
                 const imageUrlToDownload = 'newDrawings/' + newDocSnap.data().drawingId + '.jpg'
@@ -50,15 +52,15 @@ const ContinueDrawing = () => {
 
     return (
         <>
-         <div class="photoA"></div>
+            <div class="photoA"></div>
 
             {isLoading ?
                 <>Loading</>
                 :
                 (isUserSignedIn ?
-                    <DrawingArea isNewDrawing={false} imageUrl={imageUrl} imageId={id} />
+                    <DrawingArea isNewDrawing={false} imageUrl={imageUrl} imageId={id} firstUserId={firstUserId} />
                     :
-                    <div>Log in to draw!</div> 
+                    <div>Log in to draw!</div>
                 )
             }
 

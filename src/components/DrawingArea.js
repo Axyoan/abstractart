@@ -7,7 +7,7 @@ import { getAuth } from 'firebase/auth'
 import Alert from '@mui/material/Alert';
 import Collapse from '@mui/material/Collapse';
 
-const DrawingArea = ({ isNewDrawing, imageUrl = null, imageId = null }) => {
+const DrawingArea = ({ isNewDrawing, imageUrl = null, imageId = null, firstUserId = null }) => {
     const [uploaded, setUploaded] = useState(false)
     const canvasRef = useRef(null)
     const unfinishedCanvasRef = useRef(null)
@@ -56,6 +56,8 @@ const DrawingArea = ({ isNewDrawing, imageUrl = null, imageId = null }) => {
         saveImage(id, isNewDrawing)
         increaseImageCounter(auth.currentUser.uid)
         if (!isNewDrawing) {
+            increaseImageCounter(auth.currentUser.uid)
+            increaseImageCounter(firstUserId)
             associateImagesInDB(id)
         }
     }
