@@ -10,22 +10,14 @@ const NavBarExample = () => {
     const auth = getAuth()
 
     const fetchAPI = async () => {
-        axios.get('http://localhost:5000/hello?userId=' + auth.currentUser.uid)
-            .then(response => console.log("response from api: ", response.data)).catch(e => console.log(e))
+        return axios.get('http://localhost:5000/getRecommendedDrawing?userId=' + auth.currentUser.uid)
+            .then(response => response.data).catch(e => console.log(e))
     }
 
     const navigateToContinueDrawing = async () => {
         const getId = async () => {
-            const currentUserId = auth.currentUser?.uid
-            var id
-            var userId = currentUserId
-            while (userId === currentUserId) {
-                const querySnapshot = await getDocs(collection(db, "unfinishedDrawings"))
-                const randIndex = Math.floor(Math.random() * (querySnapshot.docs.length));
-                id = querySnapshot.docs[randIndex].data().drawingId
-                userId = querySnapshot.docs[randIndex].data().userId
-                console.log("...Wating")
-            }
+            const id = await fetchAPI()
+            console.log("recommendation:", id)
             navigate("/continueDrawing/" + id)
         }
         getId()
