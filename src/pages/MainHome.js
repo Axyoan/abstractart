@@ -11,10 +11,10 @@ const MainHome =() =>{
     const [checked, setChecked] = useState(false);
     console.log(status);
     if(!checked){
-        if(status === 1){
+        if(status === '1'){
             setUserCreated(true)
         }
-        else if(status === 2){
+        else if(status === '2'){
             setUserLogged(true);
         }
         setChecked(true);
@@ -29,7 +29,11 @@ const MainHome =() =>{
                     <Alert variant="filled" onClose={() => {setUserLogged(false)}}>Welcome back!</Alert>
                 </Collapse>
                 <Collapse in={userCreated}>
-                    <Alert variant="filled" onClose={() => {setUserCreated(false)}}>User created successfully</Alert>
+                    <Alert 
+                    variant="filled" 
+                    onClose={() => {setUserCreated(false)}}
+                    
+                    >User created successfully</Alert>
                 </Collapse>
             </div>
 
