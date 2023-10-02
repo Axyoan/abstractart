@@ -67,6 +67,9 @@ def getRandomDrawingFromRecommendedUser(recommended_user):
     unfinished_drawings = [(doc.to_dict()["drawingId"]) for doc in db.collection("unfinishedDrawings").where(filter=FieldFilter("userId", "==", recommended_user)).stream()]
     return random.choice(unfinished_drawings)
 
+def userHasNotLikedAnything(userId, user_likes):
+    return userId not in [doc.to_dict().keys() for doc in user_likes]
+        
 
 @app.route('/getRecommendedDrawing', methods=['GET'])
 def getRecommendedDrawing():
@@ -75,6 +78,11 @@ def getRecommendedDrawing():
     extra_user_data = db.collection("extraUserData")
     available_users = [(doc.to_dict()["userId"]) for doc in db.collection("unfinishedDrawings").stream()] 
     likesDict = getLikesDict(user_likes.stream(), extra_user_data.stream())
+
+    
+    if(userHasNotLikedAnything(args["userId"], user_likes.stream())):
+        return getRandomDrawingFromRecommendedUser(random.choice(available_users))
+    
     s = SlopeOne()
     s.update(likesDict)
     prediction = s.predict(likesDict[args["userId"]], available_users, args["userId"])
