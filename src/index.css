@@ -39,7 +39,16 @@ body {
   margin-left: 850px;
   
 }
+.photoB{
+ 
 
+
+  background-image: url(../public/img/Abstractart.gif);
+  background-size: cover;
+  height: 100vh;
+  background-repeat: no-repeat;
+  
+}
 
 
 span {
