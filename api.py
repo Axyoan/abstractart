@@ -48,7 +48,7 @@ class SlopeOne(object):
                     freqs[diffitem] += freq
             return dict([(item, value / freqs[item])
                         for item, value in preds.items()
-                        if item in available and item != currentUserId and freqs[item] > 0])
+                        if item in available and freqs[item] > 0])
 
 def getLikesDict(user_likes, extra_user_data):
 
@@ -67,25 +67,33 @@ def getRandomDrawingFromRecommendedUser(recommended_user):
     unfinished_drawings = [(doc.to_dict()["drawingId"]) for doc in db.collection("unfinishedDrawings").where(filter=FieldFilter("userId", "==", recommended_user)).stream()]
     return random.choice(unfinished_drawings)
 
-def userHasNotLikedAnything(userId, user_likes):
-    return userId not in [doc.to_dict().keys() for doc in user_likes]
+def userHasNotLikedAnything(userId, drawing_likes):
+    return userId not in [doc.to_dict().keys() for doc in drawing_likes.stream()] or True not in  drawing_likes.document(userId).get().to_dict().values()
         
 
 @app.route('/getRecommendedDrawing', methods=['GET'])
 def getRecommendedDrawing():
     args = request.args
+    current_user_id = args["userId"]
+
     user_likes = db.collection("user_likes")
     extra_user_data = db.collection("extraUserData")
-    available_users = [(doc.to_dict()["userId"]) for doc in db.collection("unfinishedDrawings").stream()] 
+    
+    #get all users that have made an unfinished drawing (except current user) and removing duplicates
+    available_users = []
+    [available_users.append((doc.to_dict()["userId"])) for doc in db.collection("unfinishedDrawings").stream() if doc.to_dict()["userId"]!=current_user_id and (doc.to_dict()["userId"]) not in available_users]
+
+    if(not available_users):
+        return ('', 204)
+
     likesDict = getLikesDict(user_likes.stream(), extra_user_data.stream())
 
-    
-    if(userHasNotLikedAnything(args["userId"], user_likes.stream())):
+    if userHasNotLikedAnything(current_user_id, db.collection("drawing_likes")):
         return getRandomDrawingFromRecommendedUser(random.choice(available_users))
     
     s = SlopeOne()
     s.update(likesDict)
-    prediction = s.predict(likesDict[args["userId"]], available_users, args["userId"])
+    prediction = s.predict(likesDict[current_user_id], available_users, current_user_id)
     recommended_user = max(prediction, key=prediction.get)
     print(recommended_user)
 
