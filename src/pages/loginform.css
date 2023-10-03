@@ -83,9 +83,9 @@ button {
 
 .btnSignOut {
   height: 50px;
-  border-radius: 1px;
+  border-radius: 10px;
   padding: 1em;
-  background-color: #6d47d9;
+  background-color: #FF914D;
   color: azure;
   border: none;
   display: center;
