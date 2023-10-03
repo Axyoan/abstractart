@@ -23,8 +23,6 @@ const MainHome =() =>{
     return (
             <div>
                 <div class="photoA"></div>
-
-                <h1>view home</h1>
                 <Collapse in={userLogged}>
                     <Alert variant="filled" onClose={() => {setUserLogged(false)}}>Welcome back!</Alert>
                 </Collapse>

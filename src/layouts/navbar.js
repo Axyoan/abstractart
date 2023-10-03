@@ -79,13 +79,17 @@ const NavBarExample = () => {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
                             <button onClick={navigateToMain} class="btn">Home</button>
-                            <button onClick={navigateToStarDraw} class="btn">Start Drawing</button>
-                            <button onClick={navigateToContinueDrawing} class="btn">Continue Drawing</button>
                             <button onClick={navigateToGallery} class="btn">Gallery</button>
-                            <button onClick={navigateToSignup} class="btn">SignUp</button>
-                            <button onClick={fetchAPI} class="btn"> api test</button>
-                            <button onClick={signOut} class="btnSignOut"> SignOut</button>
-
+                            {auth.currentUser!=null ?
+                                <>
+                                <button onClick={navigateToStarDraw} class="btn">Start Drawing</button>
+                                <button onClick={navigateToContinueDrawing} class="btn">Continue Drawing</button>
+                                <button onClick={signOut} class="btnSignOut"> SignOut</button>
+                                </>
+                                :
+                                //Change class
+                                <button onClick={navigateToSignup} class="btnSignOut">SignUp</button>
+                            }
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
