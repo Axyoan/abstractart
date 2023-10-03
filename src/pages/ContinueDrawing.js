@@ -29,8 +29,8 @@ const ContinueDrawing = () => {
 
         const fetchData = async () => {
             const newDocSnap = await getDoc(docRef)
-            setFirstUserId(newDocSnap.data().userId)
             if (newDocSnap.exists()) {
+                setFirstUserId(newDocSnap.data().userId)
                 const storage = getStorage();
                 const imageUrlToDownload = 'newDrawings/' + newDocSnap.data().drawingId + '.jpg'
                 getDownloadURL(ref(storage, imageUrlToDownload))
