@@ -68,7 +68,7 @@ def getRandomDrawingFromRecommendedUser(recommended_user):
     return random.choice(unfinished_drawings)
 
 def userHasNotLikedAnything(userId, drawing_likes):
-    return userId not in [doc.to_dict().keys() for doc in drawing_likes.stream()] or True not in  drawing_likes.document(userId).get().to_dict().values()
+    return userId not in [doc.id for doc in drawing_likes.stream()] or True not in drawing_likes.document(userId).get().to_dict().values()
         
 
 @app.route('/getRecommendedDrawing', methods=['GET'])
