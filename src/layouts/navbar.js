@@ -4,6 +4,7 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 import axios from 'axios';
 import { db } from '../firebase-config'
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import "./navbar.css"
 
 const NavBarExample = () => {
     const navigate = useNavigate();
