@@ -17,6 +17,8 @@ body {
   margin: 0px;  /* para arreglar lo del espacio de arriba */
   background-position: fixed;
   background-size: cover;
+  background-attachment: fixed;
+
 }
 
 .photo{
