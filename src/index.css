@@ -13,7 +13,7 @@ html {
 }
 
 body {
-  background-image: url(../public/img/fondo.svg);
+  background-image: url(../public/img/fondo2.svg);
   margin: 0px;  /* para arreglar lo del espacio de arriba */
   background-position: fixed;
   background-size: cover;
@@ -89,7 +89,7 @@ input[type=number] {
   margin-top: 20px;
   border-radius: 10px;
   padding: 1em;
-  background-color: #8D59FD;
+  background-color: #eb6bb8ff;
   color: azure;
   border: none;
   display: center;
