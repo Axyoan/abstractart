@@ -71,20 +71,22 @@ const NavBarExample = () => {
         navigate("/Home/")
     }
 
-    return (
+   return (
+        
         <>
             <Navbar className="navBg" variant="light" expand="lg">
                 <Container>
-                    <Navbar.Brand as={Link} to="/" >Abstractart</Navbar.Brand>
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
-                            <button onClick={navigateToMain} class="btn">Home</button>
-                            <button onClick={navigateToGallery} class="btn">Gallery</button>
+                            <button onClick= {navigateToMain} class="logoA"> </button>
+                            <button onClick={navigateToMain} class="btnHome">Home</button>
+                            <button onClick={navigateToGallery} class="btnGallery">Gallery</button>
                             {auth.currentUser!=null ?
                                 <>
-                                <button onClick={navigateToStarDraw} class="btn">Start Drawing</button>
-                                <button onClick={navigateToContinueDrawing} class="btn">Continue Drawing</button>
+                                <button onClick={navigateToStarDraw} class="btnStart">Start Drawing</button>
+                                <button onClick={navigateToContinueDrawing} class="btnContinue">Continue Drawing</button>
                                 <button onClick={signOut} class="btnSignOut"> SignOut</button>
+                                
                                 </>
                                 :
                                 //Change class
@@ -101,5 +103,7 @@ const NavBarExample = () => {
     )
 }
 export default NavBarExample
+
+
 
 
