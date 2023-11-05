@@ -85,12 +85,12 @@ button {
   height: 50px;
   border-radius: 10px;
   padding: 1em;
-  background-color: #FF914D;
+  background-color: #eb6bb8ff;
   color: azure;
   border: none;
   display: center;
   justify-content: center;
   align-items: center;
-  margin-left: 900px;
+  margin-left: 800px;
 
 }
