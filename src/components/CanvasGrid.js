@@ -6,7 +6,7 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { db } from '../firebase-config'
 
 
-const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataReady }) => {
+const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataReady, currentPage, drawingsPerPage }) => {
     const [areImagesReady, setAreImagesReady] = useState(false)
     const [reload, setReload] = useState(false)
     const [likeBtns, setLikeBtns] = useState([])
@@ -23,9 +23,9 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
         zIndex: "1"
     }
 
-    const getDrawingLikeURL = (index) => {
-        const firstUrl = imagesUrls[index][0].split('/')[1].split('.')[0]
-        const secondUrl = imagesUrls[index][1].split('/')[1].split('.')[0]
+    const getDrawingLikeURL = (imagesUrlsSlice, index) => {
+        const firstUrl = imagesUrlsSlice[index][0].split('/')[1].split('.')[0]
+        const secondUrl = imagesUrlsSlice[index][1].split('/')[1].split('.')[0]
         return firstUrl + "_" + secondUrl
     }
 
@@ -33,27 +33,36 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
         return str.split('/')[1].split('.')[0]
     }
 
-    const initializeLikes = async () => {
+    const initializeLikes = async (imagesUrlsSlice) => {
         const auth = getAuth();
         if (auth.currentUser) {
-            const newLikes = await Promise.all(imagesUrls.map(async (_, index) => {
+            const newLikes = await Promise.all(imagesUrlsSlice.map(async (_, index) => {
                 const docRef = doc(db, "drawing_likes", auth.currentUser.uid);
                 const docSnap = await getDoc(docRef);
                 return (docSnap.exists() && docSnap.data().hasOwnProperty(getDrawingLikeURL(index)))
                     ?
-                    docSnap.data()[getDrawingLikeURL(index)]
+                    docSnap.data()[getDrawingLikeURL(imagesUrlsSlice, index)]
                     : false
             }))
             setLikeBtns(newLikes)
         }
     }
 
+    const sliceImagesUrls = () => {
+        return imagesUrls.slice((currentPage - 1) * drawingsPerPage, Math.min((currentPage - 1) * drawingsPerPage + drawingsPerPage, count))
+    }
+
+    const sliceCanvasesRefs = () => {
+        return
+    }
+
     useEffect(() => {
         console.log("grid rendered")
         const storage = getStorage();
-        initializeLikes()
-        imagesUrls.forEach((imageUrl, index) => {
-            const canvas = canvasesRefs.current[index]
+        const imagesUrlsSlice = sliceImagesUrls()
+        initializeLikes(imagesUrlsSlice)
+        imagesUrlsSlice.forEach((imageUrl, index) => {
+            const canvas = canvasesRefs.current[index + (currentPage - 1) * drawingsPerPage]
             if (canvas == null) return
             const canvasContext = canvas.getContext("2d")
             const firstImg = new Image();
@@ -77,13 +86,13 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
         })
         setAreImagesReady(true)
 
-    }, [isDataReady, imagesUrls, reload])
+    }, [isDataReady, imagesUrls, reload, currentPage])
 
-    const updateLike = async (index, newVal) => {
+    const updateLike = async (imagesUrlsSlice, index, newVal) => {
         const auth = getAuth();
-        const firstId = splitUrl(imagesUrls[index][0])
+        const firstId = splitUrl(imagesUrlsSlice[index][0])
 
-        const secondSecond = splitUrl(imagesUrls[index][1])
+        const secondSecond = splitUrl(imagesUrlsSlice[index][1])
 
         const qryUnfinished = await getDoc(doc(db, "unfinishedDrawings", firstId))
         const qryCompleted = await getDoc(doc(db, "completedDrawings", secondSecond))
@@ -150,27 +159,35 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
     }
 
     const handleOnClickLike = (index) => {
-        updateLike(index, !likeBtns[index])
+        const imagesUrlsSlice = sliceImagesUrls()
+        updateLike(imagesUrlsSlice, index, !likeBtns[index])
         const newLikes = likeBtns.map((k, i) => {
             return i === index ? !k : k
         });
         setLikeBtns(newLikes)
     }
 
+
+    /* canvasesRefs.current.slice((currentPage - 1) * drawingsPerPage, Math.min((currentPage - 1) * drawingsPerPage + drawingsPerPage, count))[index] */
+
     return (
         <>
+            {console.log("asdfas", count - (currentPage - 1) * drawingsPerPage)}
             {
+
                 areImagesReady ?
-                    Array.from({ length: count }, (_, index) =>
-                        <><div style={canvasContainerStyle}><canvas
-                            key={index}
-                            width={width}
-                            height={height}
-                            style={canvasStyle}
-                            ref={el => canvasesRefs.current[index] = el}
-                        />
-                        </div>
-                            <a style={likeBtnStyle} on onClick={() => handleOnClickLike(index)} className='btn'>Like<img src={likeBtns[index] ? "../../../assets/heart 2.svg" : "../../../assets/heart.svg"} /></a>
+                    Array.from({ length: Math.min(drawingsPerPage, count - (currentPage - 1) * drawingsPerPage) }, (_, index) =>
+                        <>
+                            {console.log("halp", index + (currentPage - 1) * drawingsPerPage)}
+                            <div style={canvasContainerStyle}><canvas
+                                key={index + (currentPage - 1) * drawingsPerPage}
+                                width={width}
+                                height={height}
+                                style={canvasStyle}
+                                ref={el => canvasesRefs.current[index + (currentPage - 1) * drawingsPerPage] = el}
+                            />
+                            </div>
+                            <a style={likeBtnStyle} onClick={() => handleOnClickLike(index + (currentPage - 1) * drawingsPerPage)} className='btn'>Like<img src={likeBtns[index + (currentPage - 1) * drawingsPerPage] ? "../../../assets/heart 2.svg" : "../../../assets/heart.svg"} /></a>
                             <br /><br />
                         </>)
 

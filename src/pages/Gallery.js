@@ -2,11 +2,15 @@ import React, { useEffect, useState, useRef } from 'react'
 import { collection, getDocs, getCountFromServer } from "firebase/firestore";
 import { db } from '../firebase-config'
 import CanvasGrid from '../components/CanvasGrid';
+import GalleryPagination from '../components/GalleryPagination'
 
-const Galery = () => {
+const Gallery = () => {
     const [imagesUrls, setImagesUrls] = useState([])
     const [canvasCount, setCanvasCount] = useState(null)
     const [isDataReady, setIsDataReady] = useState(false)
+    const [currentPage, setCurrentPage] = useState(1)
+
+    const drawingsPerPage = 5
 
     const canvasesRefs = useRef([])
 
@@ -33,12 +37,18 @@ const Galery = () => {
         loadAllImages()
     }, [])
 
+    const updateCurrentPage = (page) => {
+        setCurrentPage(page)
+    }
+
     return (
         <div>
-            <h1>view galery</h1>
-            <CanvasGrid count={canvasCount} height={500} width={1100} canvasesRefs={canvasesRefs} imagesUrls={imagesUrls} isDataReady={isDataReady} />
+            {console.log(canvasCount)}
+            <h1>view gallery</h1>
+            <CanvasGrid count={canvasCount} height={500} width={1100} canvasesRefs={canvasesRefs} imagesUrls={imagesUrls} isDataReady={isDataReady} currentPage={currentPage} drawingsPerPage={drawingsPerPage} />
+            <GalleryPagination currentPage={currentPage} setCurrentPage={updateCurrentPage} pageCount={Math.ceil(canvasCount / drawingsPerPage)} />
         </div>
 
     )
 }
-export default Galery
+export default Gallery
