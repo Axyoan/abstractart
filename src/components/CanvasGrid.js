@@ -168,13 +168,10 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
 
     return (
         <>
-            {console.log("asdfas", count - (currentPage - 1) * drawingsPerPage)}
             {
-
                 areImagesReady ?
                     Array.from({ length: Math.min(drawingsPerPage, count - (currentPage - 1) * drawingsPerPage) }, (_, index) =>
                         <>
-                            {console.log("halp", index + (currentPage - 1) * drawingsPerPage)}
                             <div style={canvasContainerStyle}><canvas
                                 key={index + (currentPage - 1) * drawingsPerPage}
                                 width={width}
@@ -183,7 +180,7 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
                                 ref={el => canvasesRefs.current[index + (currentPage - 1) * drawingsPerPage] = el}
                             />
                             </div>
-                            <a style={likeBtnStyle} onClick={() => handleOnClickLike(index + (currentPage - 1) * drawingsPerPage)} className='btn'>Like<img src={likeBtns[index + (currentPage - 1) * drawingsPerPage] ? "../../../assets/heart 2.svg" : "../../../assets/heart.svg"} /></a>
+                            <a style={likeBtnStyle} onClick={() => handleOnClickLike(index)} className='btn'>Like<img src={likeBtns[index] ? "../../../assets/heart 2.svg" : "../../../assets/heart.svg"} /></a>
                             <br /><br />
                         </>)
 
