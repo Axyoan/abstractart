@@ -280,7 +280,7 @@ function pen4()
 export default Canvas
 
 const canvasStyle = {
-    border: "1px solid black",
+    border: "2px solid purple",
     zIndex: "0"
 }
 
