@@ -4,12 +4,14 @@
   margin-left: 20px;
   background-color: #eb6bb8ff;
   position: relative;
-  height: 100%
+  height: 100%;
+  border: 2px solid #50218B;
+
   
 }
 
 .white{
-    border-radius: 10px;
+    border-radius: 100px;
     padding: 1em;
     background-color: #ffffff;
     color: azure;
@@ -21,7 +23,7 @@
   }
 
   .black{
-    border-radius: 10px;
+    border-radius: 100px;
     padding: 1em;
     background-color: #000000;
     color: azure;
@@ -45,7 +47,7 @@
   }
 
   .blue{
-    border-radius: 10px;
+    border-radius: 100px;
     padding: 1em;
     background-color: #2934c6;
     color: azure;
@@ -57,7 +59,7 @@
   }
 
   .red{
-    border-radius: 10px;
+    border-radius: 100px;
     padding: 1em;
     background-color: #cc1919;
     color: azure;
@@ -69,7 +71,7 @@
   }
 
   .pink{
-    border-radius: 10px;
+    border-radius: 100px;
     padding: 1em;
     background-color: #e32ebc;
     color: azure;
@@ -82,7 +84,7 @@
 
 
   .green{
-    border-radius: 10px;
+    border-radius: 100px;
     padding: 1em;
     background-color: #1ae33f;
     color: azure;
@@ -94,7 +96,7 @@
   }
 
   .greenP{
-    border-radius: 10px;
+    border-radius: 100px;
     padding: 1em;
     background-color: #067608;
     color: azure;
@@ -106,7 +108,7 @@
   }
 
   .blueP{
-    border-radius: 10px;
+    border-radius: 100px;
     padding: 1em;
     background-color: #1d99aa;
     color: azure;
@@ -118,7 +120,7 @@
   }
 
   .yellow{
-    border-radius: 10px;
+    border-radius: 100px;
     padding: 1em;
     background-color: #fffb14;
     color: azure;
@@ -130,7 +132,7 @@
   }
 
   .orange{
-    border-radius: 10px;
+    border-radius: 100px;
     padding: 1em;
     background-color: #fa9906;
     color: azure;
@@ -142,7 +144,7 @@
   }
 
   .purple{
-    border-radius: 10px;
+    border-radius: 100px;
     padding: 1em;
     background-color: #5e115f;
     color: azure;
@@ -154,7 +156,7 @@
   }
 
   .cyan{
-    border-radius: 10px;
+    border-radius: 100px;
     padding: 1em;
     background-color: #1ac8e3;
     color: azure;
@@ -166,7 +168,7 @@
   }
 
   .violet{
-    border-radius: 10px;
+    border-radius: 100px;
     padding: 1em;
     background-color: #a578c5;
     color: azure;
@@ -178,7 +180,7 @@
   }
 
   .brown{
-    border-radius: 10px;
+    border-radius: 100px;
     padding: 1em;
     background-color: #392a10;
     color: azure;
@@ -190,7 +192,7 @@
   }
 
   .coffee{
-    border-radius: 10px;
+    border-radius: 100px;
     padding: 1em;
     background-color: #463e32;
     color: azure;
@@ -202,7 +204,7 @@
   }
 
   .kirby{
-    border-radius: 10px;
+    border-radius: 100px;
     padding: 1em;
     background-color: #e4a3d1;
     color: azure;
@@ -214,7 +216,7 @@
   }
 
   .sand{
-    border-radius: 10px;
+    border-radius: 100px;
     padding: 1em;
     background-color: #c3c19e;
     color: azure;
