@@ -2,43 +2,38 @@ import React, { useState } from 'react'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth"
 import Alert from '@mui/material/Alert';
 import Collapse from '@mui/material/Collapse';
-import {useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { auth } from '../firebase-config';
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import "./loginform.css"
 
-
+const provider = new GoogleAuthProvider();
 
 export const SignUp = () => {
 
-
-  //prueba de inicio sesion
-
-
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [badParameters, setBadParameters] = useState(false);
 
-  const register = async () => {
-    try {
-      const user = await createUserWithEmailAndPassword(auth, email, password);
-      //navigate("/Home/"+ 1)
-      navigate("/Home")
-    } catch (error) {
-      setBadParameters(true);
-      console.error(error)
-    }
-  }
-  const login = async () => {
-    try {
-      // const user = await createUserWithEmailAndPassword(auth, email, password);
-      const user = await signInWithEmailAndPassword(auth, email, password)
-      navigate("/Home/"+ 2)
-      
-    } catch (error) {
-      setBadParameters(true);
-      console.error(error)
-    }
+  const googleLogIn = () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        const user = result.user;
+        navigate("/Home")
+      }).catch((error) => {
+        setBadParameters(true);
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.customData.email;
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        console.error("Error signing in!\n" +
+          "Code: " + errorCode + "\n" +
+          "Message: " + errorMessage + "\n" +
+          "email: " + email + "\n" +
+          "credential: " + credential + "\n"
+        )
+      });
   }
 
   return (
@@ -46,22 +41,10 @@ export const SignUp = () => {
       <div>
         <div class="photoA"></div>
 
-        <h1>Sign Up</h1>
-      
-        <h2>
-          <input placeholder='Email' onChange={(e) => { setEmail(e.target.value) }} />
-        </h2>
-        <h3>
-          <input placeholder='password' type='password' onChange={(e) => { setPassword(e.target.value) }} />
-        </h3>
-
-
-        <button onClick={register} class = "btnLg">Create user</button>
-
-        <button onClick={login}class = "btnLg">Login</button>
+        <button onClick={googleLogIn} class="btnLg">Login with Google</button>
 
         <Collapse in={badParameters}>
-          <Alert variant="filled" severity='error' onClose={() => {setBadParameters(false)}}>Something went wrong, verify your data and try again.</Alert>
+          <Alert variant="filled" severity='error' onClose={() => { setBadParameters(false) }}>Something went wrong, verify your data and try again.</Alert>
         </Collapse>
 
       </div>
