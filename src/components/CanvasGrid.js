@@ -39,7 +39,7 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
             const newLikes = await Promise.all(imagesUrlsSlice.map(async (_, index) => {
                 const docRef = doc(db, "drawing_likes", auth.currentUser.uid);
                 const docSnap = await getDoc(docRef);
-                return (docSnap.exists() && docSnap.data().hasOwnProperty(getDrawingLikeURL(index)))
+                return (docSnap.exists() && docSnap.data().hasOwnProperty(getDrawingLikeURL(imagesUrlsSlice, index)))
                     ?
                     docSnap.data()[getDrawingLikeURL(imagesUrlsSlice, index)]
                     : false
@@ -50,10 +50,6 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
 
     const sliceImagesUrls = () => {
         return imagesUrls.slice((currentPage - 1) * drawingsPerPage, Math.min((currentPage - 1) * drawingsPerPage + drawingsPerPage, count))
-    }
-
-    const sliceCanvasesRefs = () => {
-        return
     }
 
     useEffect(() => {
@@ -104,7 +100,7 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
             if (user) {
                 // update likes of the drawing itself, not the individual users
                 let docRef = doc(db, "drawing_likes", auth.currentUser.uid);
-                const drawingId = getDrawingLikeURL(index)
+                const drawingId = getDrawingLikeURL(imagesUrlsSlice, index)
                 if ((await getDoc(docRef)).exists()) {
                     updateDoc(docRef, {
                         [drawingId]: newVal
