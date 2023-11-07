@@ -5,7 +5,7 @@ import { SignUp } from './pages/SignUp';
 import LogIn from './pages/LogIn'
 import MainHome from './pages/MainHome';
 import Gallery from './pages/Gallery';
-import NavBarExample from './layouts/navbar';
+import NavBar from './layouts/navbar';
 import StartDrawing from './pages/StartDrawing';
 import ContinueDrawing from './pages/ContinueDrawing'
 
@@ -15,7 +15,7 @@ function App() {
     <div className="App">
 
       <Routes>
-        <Route path='/' element={<NavBarExample />}>
+        <Route path='/' element={<NavBar />}>
           <Route index element={<MainHome />} />
           <Route path='Home/:status' element={<MainHome />} />
           <Route path='gallery' element={<Gallery />} />

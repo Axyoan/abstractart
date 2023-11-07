@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from 'react'
 import { Navbar, Nav, Container } from "react-bootstrap"
 import { Outlet, Link, useNavigate } from "react-router-dom"
 import { collection, query, where, getDocs } from "firebase/firestore";
@@ -6,9 +7,11 @@ import { db } from '../firebase-config'
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import "./navbar.css"
 
-const NavBarExample = () => {
+const NavBar = () => {
     const navigate = useNavigate();
     const auth = getAuth()
+
+    const [isUserSignedIn, setIsUserSignedIn] = useState(false)
 
     const fetchAPI = async () => {
         return axios.get('http://localhost:5000/getRecommendedDrawing?userId=' + auth.currentUser.uid)
@@ -72,22 +75,27 @@ const NavBarExample = () => {
         navigate("/Home/")
     }
 
-   return (
-        
+    useEffect(() => {
+        onAuthStateChanged(auth, (u) => {
+            console.log("uh oh  ")
+            setIsUserSignedIn(u != null)
+        })
+    }, [])
+
+    return (
         <>
             <Navbar className="navBg" variant="light" expand="lg">
                 <Container>
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
-                            <button onClick= {navigateToMain} class="logoA"> </button>
+                            <button onClick={navigateToMain} class="logoA"> </button>
                             <button onClick={navigateToMain} class="btnHome">Home</button>
                             <button onClick={navigateToGallery} class="btnGallery">Gallery</button>
-                            {auth.currentUser!=null ?
+                            {isUserSignedIn ?
                                 <>
-                                <button onClick={navigateToStarDraw} class="btnStart">Start Drawing</button>
-                                <button onClick={navigateToContinueDrawing} class="btnContinue">Continue Drawing</button>
-                                <button onClick={signOut} class="btnSignOut"> SignOut</button>
-                                
+                                    <button onClick={navigateToStarDraw} class="btnStart">Start Drawing</button>
+                                    <button onClick={navigateToContinueDrawing} class="btnContinue">Continue Drawing</button>
+                                    <button onClick={signOut} class="btnSignOut"> SignOut</button>
                                 </>
                                 :
                                 //Change class
@@ -103,7 +111,7 @@ const NavBarExample = () => {
         </>
     )
 }
-export default NavBarExample
+export default NavBar
 
 
 
