@@ -5,13 +5,26 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 import axios from 'axios';
 import { db } from '../firebase-config'
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import "./navbar.css"
 
 const NavBar = () => {
     const navigate = useNavigate();
     const auth = getAuth()
-
+    
     const [isUserSignedIn, setIsUserSignedIn] = useState(false)
+    const [username, setUsername] = useState("anon");
+    
+    const getUsername = async (userId) => {
+        const query = await getDoc(doc(db, "extraUserData", userId))
+        if (query.exists()) {
+            setUsername(query.data().username)
+        }
+        console.log("_______________" + username)
+        return username
+    }
+    
+    
 
     const fetchAPI = async () => {
         return axios.get('http://localhost:5000/getRecommendedDrawing?userId=' + auth.currentUser.uid)
@@ -95,6 +108,7 @@ const NavBar = () => {
                                 <>
                                     <button onClick={navigateToStarDraw} class="btnStart">Start Drawing</button>
                                     <button onClick={navigateToContinueDrawing} class="btnContinue">Continue Drawing</button>
+                                    <p class="user">{username}</p>
                                     <button onClick={signOut} class="btnSignOut"> SignOut</button>
                                 </>
                                 :

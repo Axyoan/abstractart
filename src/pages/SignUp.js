@@ -6,11 +6,24 @@ import { useNavigate } from "react-router-dom"
 import { auth } from '../firebase-config';
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import "./loginform.css"
+import { doc, setDoc, getDoc } from "firebase/firestore";
+import { db } from '../firebase-config'
 
 const provider = new GoogleAuthProvider();
 
 export const SignUp = () => {
 
+  const createUsername = async (userId) => {
+    const docRef = doc(db, "extraUserData", userId)
+    const query = await getDoc(doc(db, "extraUserData", userId))
+    if (!query.exists()) {
+      await setDoc(docRef, {
+      username: "anon"
+  });
+  }
+    
+
+}
   const navigate = useNavigate();
   const [badParameters, setBadParameters] = useState(false);
 
@@ -20,6 +33,7 @@ export const SignUp = () => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
         const user = result.user;
+        createUsername(auth.currentUser.uid);
         navigate("/Home")
       }).catch((error) => {
         setBadParameters(true);

@@ -65,13 +65,7 @@ const DrawingArea = ({ isNewDrawing, imageUrl = null, imageId = null, firstUserI
 
     return (
         <>
-            {
-                isNewDrawing ?
-                    <p style={instructionsStyle}>Be sure to draw something to the <b>right</b> of the dotted line so that the user who finishes the drawing has something to go off of!</p>
-                    :
-                    <p style={instructionsStyle}>To the left of the dotted line is a small piece of another drawing, complete it using your imagination!</p>
-            }
-            <div>
+            <div style={tempStyle}>
                 <Canvas width={isNewDrawing ? 500 : 600} height={500} canvasRef={canvasRef} unfinishedCanvasRef={unfinishedCanvasRef} isNewDrawing={isNewDrawing} imageUrl={imageUrl} />
             </div>
             <button onClick={uploadImage} class="btn2" >Upload image</button>
@@ -82,10 +76,7 @@ const DrawingArea = ({ isNewDrawing, imageUrl = null, imageId = null, firstUserI
     )
 }
 
-const instructionsStyle = {
-    margin: "0 20%",
-    fontSize: "20px",
-    color: "black"
+const tempStyle = {
 }
 
 export default DrawingArea
