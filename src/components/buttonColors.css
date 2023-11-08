@@ -11,175 +11,157 @@
 }
 
 .white{
-    border-radius: 100px;
-    padding: 1em;
-    background-color: #ffffff;
-    color: azure;
-    border: none;
-    display: center;
-    justify-content: center;
-    align-items: center;
+  background: url(/public/img/colorWhite.png);
+  width: 60;
+  height: 50;
+  background-size:contain;
+  background-repeat: no-repeat;
+  background-position: center;
   
   }
 
   .black{
-    border-radius: 100px;
-    padding: 1em;
-    background-color: #000000;
-    color: azure;
-    border: none;
-    display: center;
-    justify-content: center;
-    align-items: center;
+    background: url(/public/img/colorBlack.png);
+    width: 60;
+    height: 50;
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
   
   }
 
   .gray{
-    border-radius: 100px;
-    padding: 1em;
-    background-color: #717171;
-    color: azure;
-    border: none;
-    display: center;
-    justify-content: center;
-    align-items: center;
+    background: url(/public/img/colorGray.png);
+    width: 60;
+    height: 50;
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
   
   }
 
   .blue{
-    border-radius: 100px;
-    padding: 1em;
-    background-color: #2934c6;
-    color: azure;
-    border: none;
-    display: center;
-    justify-content: center;
-    align-items: center;
+    background: url(/public/img/colorAzulP.png);
+    width: 60;
+    height: 50;
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
   
   }
 
+ 
   .red{
-    border-radius: 100px;
-    padding: 1em;
-    background-color: #cc1919;
-    color: azure;
-    border: none;
-    display: center;
-    justify-content: center;
-    align-items: center;
-  
+    background: url(/public/img/colorRed.png);
+    width: 60;
+    height: 50;
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    
   }
 
   .pink{
-    border-radius: 100px;
-    padding: 1em;
-    background-color: #e32ebc;
-    color: azure;
-    border: none;
-    display: center;
-    justify-content: center;
-    align-items: center;
+    background: url(/public/img/colorPink.png);
+    width: 60;
+    height: 50;
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
   
   }
 
 
   .green{
-    border-radius: 100px;
-    padding: 1em;
-    background-color: #1ae33f;
-    color: azure;
-    border: none;
-    display: center;
-    justify-content: center;
-    align-items: center;
+    background: url(/public/img/colorGreenP.png);
+    width: 60;
+    height: 50;
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
   
   }
 
   .greenP{
-    border-radius: 100px;
-    padding: 1em;
-    background-color: #067608;
-    color: azure;
-    border: none;
-    display: center;
-    justify-content: center;
-    align-items: center;
-  
+    background: url(/public/img/colorverdeP.png);
+    width: 60;
+    height: 50;
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
   }
 
   .blueP{
-    border-radius: 100px;
-    padding: 1em;
-    background-color: #1d99aa;
-    color: azure;
-    border: none;
-    display: center;
-    justify-content: center;
-    align-items: center;
+    background: url(/public/img/colorAcua.png);
+    width: 60;
+    height: 50;
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
   
   }
 
   .yellow{
-    border-radius: 100px;
-    padding: 1em;
-    background-color: #fffb14;
-    color: azure;
-    border: none;
-    display: center;
-    justify-content: center;
-    align-items: center;
+    background: url(/public/img/coloryellow.png);
+    width: 60;
+    height: 50;
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
   
   }
 
   .orange{
-    border-radius: 100px;
-    padding: 1em;
-    background-color: #fa9906;
-    color: azure;
-    border: none;
-    display: center;
-    justify-content: center;
-    align-items: center;
+    background: url(/public/img/colorOrange.png);
+    width: 60;
+    height: 50;
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
   
   }
 
   .purple{
-    border-radius: 100px;
-    padding: 1em;
-    background-color: #5e115f;
-    color: azure;
-    border: none;
-    display: center;
-    justify-content: center;
-    align-items: center;
+    background: url(/public/img/colorPurple.png);
+    width: 60;
+    height: 50;
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
   
   }
 
   .cyan{
-    border-radius: 100px;
-    padding: 1em;
-    background-color: #1ac8e3;
-    color: azure;
-    border: none;
-    display: center;
-    justify-content: center;
-    align-items: center;
+     background: url(/public/img/colorAzul.png);
+    width: 60;
+    height: 50;
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
   
   }
 
   .violet{
-    border-radius: 100px;
-    padding: 1em;
-    background-color: #a578c5;
-    color: azure;
-    border: none;
-    display: center;
-    justify-content: center;
-    align-items: center;
+    background: url(/public/img/colorviolet.png);
+    width: 60;
+    height: 50;
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
   
   }
 
   .brown{
+    background: url(/public/img/colorBrown.png);
+    width: 60;
+    height: 50;
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  
+  }
+
+ /**  bloque de seguridad para colores  .brown{
     border-radius: 100px;
     padding: 1em;
     background-color: #392a10;
@@ -189,41 +171,35 @@
     justify-content: center;
     align-items: center;
   
-  }
+  } */ 
 
   .coffee{
-    border-radius: 100px;
-    padding: 1em;
-    background-color: #463e32;
-    color: azure;
-    border: none;
-    display: center;
-    justify-content: center;
-    align-items: center;
+    background: url(/public/img/colorCoffee.png);
+    width: 60;
+    height: 50;
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
   
   }
 
   .kirby{
-    border-radius: 100px;
-    padding: 1em;
-    background-color: #e4a3d1;
-    color: azure;
-    border: none;
-    display: center;
-    justify-content: center;
-    align-items: center;
+    background: url(/public/img/colorkirby.png);
+    width: 60;
+    height: 50;
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
   
   }
 
   .sand{
-    border-radius: 100px;
-    padding: 1em;
-    background-color: #c3c19e;
-    color: azure;
-    border: none;
-    display: center;
-    justify-content: center;
-    align-items: center;
+    background: url(/public/img/colorSand.png);
+    width: 60;
+    height: 50;
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position: center;
   
   }
 
