@@ -209,7 +209,8 @@ function pen4()
 
     return (
         <>
-            <div style={tempStyle}>
+             <div className='canvas-container'>
+              <div style={tempStyle}>
                 <div style={canvasContainerStyle}>
                     <canvas
                         width={width}
@@ -271,6 +272,9 @@ function pen4()
                 
         
                 </div>
+
+
+        </div>
             
             
         </>
