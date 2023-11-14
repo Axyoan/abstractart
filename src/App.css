@@ -4,10 +4,12 @@
 
 section {
   color: #fff;
-  width:192vh;
-  height: 50vh;  
+  width:190vh;
+  height: 45vh;  
 }
 
 .navBg {
   background-color: #50218B;
+  width:191.8vh;
+
 }
