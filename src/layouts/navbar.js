@@ -13,18 +13,14 @@ const NavBar = () => {
     const auth = getAuth()
     
     const [isUserSignedIn, setIsUserSignedIn] = useState(false)
-    const [username, setUsername] = useState("anon");
+    const [username, setUsername] = useState("Anonymous");
     
     const getUsername = async (userId) => {
         const query = await getDoc(doc(db, "extraUserData", userId))
         if (query.exists()) {
             setUsername(query.data().username)
         }
-        console.log("_______________" + username)
-        return username
     }
-    
-    
 
     const fetchAPI = async () => {
         return axios.get('http://localhost:5000/getRecommendedDrawing?userId=' + auth.currentUser.uid)
@@ -62,6 +58,11 @@ const NavBar = () => {
         }
         getId()
     }
+
+    const navigateToSettings = async () => {
+        navigate("/settings/")
+    }
+    
     const navigateToGallery = async () => {
 
         navigate("/gallery/")
@@ -89,9 +90,11 @@ const NavBar = () => {
     }
 
     useEffect(() => {
+        
         onAuthStateChanged(auth, (u) => {
             console.log("uh oh  ")
             setIsUserSignedIn(u != null)
+            getUsername(auth.currentUser.uid )
         })
     }, [])
 
@@ -108,7 +111,7 @@ const NavBar = () => {
                                 <>
                                     <button onClick={navigateToStarDraw} class="btnStart">Start Drawing</button>
                                     <button onClick={navigateToContinueDrawing} class="btnContinue">Continue Drawing</button>
-                                    <p class="user">{username}</p>
+                                     <button onClick={navigateToSettings} class="btnStart">{username}</button>
                                     <button onClick={signOut} class="btnSignOut"> SignOut</button>
                                 </>
                                 :

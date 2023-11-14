@@ -18,7 +18,7 @@ export const SignUp = () => {
     const query = await getDoc(doc(db, "extraUserData", userId))
     if (!query.exists()) {
       await setDoc(docRef, {
-      username: "anon"
+      username: "Anonymous"
   });
   }
     
