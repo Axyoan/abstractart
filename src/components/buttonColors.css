@@ -9,7 +9,12 @@
 
   
 }
-
+.canvas-container {
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 100px;
+}
 .white{
   background: url(/public/img/colorWhite.png);
   width: 60;
