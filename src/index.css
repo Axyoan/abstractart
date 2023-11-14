@@ -1,3 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+}
+
 :root {
   --yellow: #ffc600;
   --black: #272727;
@@ -31,16 +40,7 @@ body {
   margin-left: 50px;
   
 }
-.photoA{
-  background: url(../public/img/logo.png);
-  width: 200px;
-  height: 200px;
-  background-size: 200px;
-  background-repeat: no-repeat;
-  background-position: top right;
-  margin-left: 850px;
-  
-}
+
 .photoB{
  
 
