@@ -6,7 +6,6 @@ import { db } from '../firebase-config'
 import { getAuth } from 'firebase/auth'
 import Alert from '@mui/material/Alert';
 import Collapse from '@mui/material/Collapse';
-import context from 'react-bootstrap/esm/AccordionContext'
 
 const DrawingArea = ({ isNewDrawing, imageUrl = null, imageId = null, firstUserId = null }) => {
     const [uploaded, setUploaded] = useState(false)
@@ -72,8 +71,8 @@ const DrawingArea = ({ isNewDrawing, imageUrl = null, imageId = null, firstUserI
             </div>
             <button onClick={uploadImage} class="btn2" >Upload image</button>
             <div style={alert}>
-                <Collapse in={true}>
-                    <Alert variant="filled" severity='success' onClose={() => { setUploaded(false) }}>Draw uploaded successfully</Alert>
+                <Collapse in={uploaded}>
+                    <Alert variant="filled" severity='success' onClose={() => { setUploaded(false) }}>Paint uploaded successfully</Alert>
                 </Collapse>
             </div>
         </>

@@ -19,7 +19,7 @@ const Settings = () => {
             })
         }
         changeUsername()
-        navigate("/Home")
+        navigate("/Home/1")
         
     }
     const getUsername = async (userId) => {
