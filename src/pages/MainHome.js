@@ -1,16 +1,28 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Alert from '@mui/material/Alert';
 import Collapse from '@mui/material/Collapse';
+import { query, orderBy, limit, collection, onSnapshot } from "firebase/firestore";
 import { useParams } from 'react-router-dom';
+
+import { db } from '../firebase-config'
+import HomeCarousel from '../components/HomeCarousel'
 
 const MainHome = () => {
 
     const { status } = useParams();
     const [userCreated, setUserCreated] = useState(false);
     const [userLogged, setUserLogged] = useState(false);
+    const [imgsUrls, setImgsUrls] = useState([]);
+    const [isDataReady, setIsDataReady] = useState(false);
     const [checked, setChecked] = useState(false);
 
-    console.log(status);
+
+    const height = 500
+    const width = 1100
+    const drawingCountOnCarousel = 10
+
+    const canvasesRefs = useRef([])
+
     if (!checked) {
         if (status === '1') {
             setUserCreated(true)
@@ -21,11 +33,35 @@ const MainHome = () => {
         setChecked(true);
     }
 
+    useEffect(() => {
+        canvasesRefs.current = canvasesRefs.current.slice(0, drawingCountOnCarousel);
+        const newImgsUrls = []
+        onSnapshot(query(collection(db, "associatedDrawings"), orderBy("likeCounter"), limit(10)), (snapshot) => {
+            snapshot.forEach(doc => {
+                const firstImageUrlToDownload = 'newDrawings/' + doc.data()["firstId"] + '.jpg'
+                const secondImageUrlToDownload = 'continuedDrawings/' + doc.data()["secondId"] + '.jpg'
+                newImgsUrls.push([firstImageUrlToDownload, secondImageUrlToDownload])
+            });
+            setIsDataReady(true)
+            setImgsUrls(newImgsUrls)
+        });
+    }, [])
+
     return (
         <div>
             <p style={tutorialStyle}>
                 Welcome to <b>AbstractArt!</b> This is an online adaptation of Exquisite Corpse: a game in which each participant takes turns drawing on a sheet of paper, folding it to conceal his or her contribution, and then passing it to the next player for a further contribution. Click on "Start Drawing" to create the first part of a drawing, or "Continue Drawing" to finish what another user has started.
             </p>
+            <HomeCarousel
+                drawingCountOnCarousel={drawingCountOnCarousel}
+                height={height}
+                width={width}
+                canvasesRefs={canvasesRefs}
+                imgsUrls={imgsUrls}
+                isDataReady={isDataReady}
+            />
+
+
             <Collapse in={userLogged}>
                 <Alert variant="filled" onClose={() => { setUserLogged(false) }}>Welcome back!</Alert>
             </Collapse>
