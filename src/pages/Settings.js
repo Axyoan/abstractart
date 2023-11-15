@@ -37,9 +37,9 @@ const Settings = () => {
 
     return (
         <>
-            <h2>
-                <label>Username: </label> <input value={username} onChange={(e) => { setUsername(e.target.value) }} />
-            </h2>
+            <div>
+                Username: <input value={username} onChange={(e) => { setUsername(e.target.value) }} />
+            </div>
             <button onClick={upload}>Upload</button>
         </>
     )

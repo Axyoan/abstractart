@@ -10,4 +10,8 @@ section {
 
 .navBg {
   background-color: #50218B;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
 }
