@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
-import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, updateDoc, getDocs, collection } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 
 import { db } from '../firebase-config'
@@ -10,6 +10,7 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
     const [areImagesReady, setAreImagesReady] = useState(false)
     const [reload, setReload] = useState(false)
     const [likeBtns, setLikeBtns] = useState([])
+    const [likeCnt, setLikeCnt] = useState([])
     const [firstUser, setFirstUser] = useState("Anonymous");
     const [secondUser, setSecondUser] = useState("Anonymous");
 
@@ -38,6 +39,7 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
     const initializeLikes = async (imagesUrlsSlice) => {
         const auth = getAuth();
         if (auth.currentUser) {
+            // Initialize likes for the current user
             const newLikes = await Promise.all(imagesUrlsSlice.map(async (_, index) => {
                 const docRef = doc(db, "drawing_likes", auth.currentUser.uid);
                 const docSnap = await getDoc(docRef);
@@ -47,6 +49,18 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
                     : false
             }))
             setLikeBtns(newLikes)
+
+            // Initialize global like counter
+            const newLikeCnt = await Promise.all(imagesUrlsSlice.map(async (imgUrl, index) => {
+                const assocDrawingsUrl = imgUrl[0].split('/')[1].split('.')[0] + imgUrl[1].split('/')[1].split('.')[0]
+                const docRef = doc(db, "associatedDrawings", assocDrawingsUrl);
+                const docSnap = await getDoc(docRef);
+                return (docSnap.exists() && docSnap.data().hasOwnProperty("likeCounter"))
+                    ?
+                    docSnap.data()["likeCounter"]
+                    : 0
+            }))
+            setLikeCnt(newLikeCnt)
         }
     }
 
@@ -80,7 +94,7 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
                 })
             }).then(() => {
                 setReload(true)
-            })
+            }).catch(() => { console.log("Error loading image from storage", imageUrl) })
         })
         setAreImagesReady(true)
 
@@ -102,14 +116,14 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
             if (user) {
                 const queryFirstUser = await getDoc(doc(db, "extraUserData", qryUnfinished.data().userId))
                 console.log(qryUnfinished.data().userId)
-                    if (queryFirstUser.exists() && queryFirstUser.data().username != undefined) {
-                        console.log("==============" + queryFirstUser.data().username)
-                        setFirstUser(queryFirstUser.data().username)
-                    }
+                if (queryFirstUser.exists() && queryFirstUser.data().username != undefined) {
+                    console.log("==============" + queryFirstUser.data().username)
+                    setFirstUser(queryFirstUser.data().username)
+                }
                 const querySecondUser = await getDoc(doc(db, "extraUserData", qryCompleted.data().userId))
-                    if (querySecondUser.exists() && querySecondUser.data().username != undefined) {
-                        setSecondUser(querySecondUser.data().username)
-                    }
+                if (querySecondUser.exists() && querySecondUser.data().username != undefined) {
+                    setSecondUser(querySecondUser.data().username)
+                }
                 // update likes of the drawing itself, not the individual users
                 let docRef = doc(db, "drawing_likes", auth.currentUser.uid);
                 const drawingId = getDrawingLikeURL(imagesUrlsSlice, index)
@@ -160,6 +174,31 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
                         [qryCompleted.data().userId]: newLikeCounter
                     });
                 }
+
+                // Update like counter
+                docRef = doc(db, "associatedDrawings", drawingId.replace('_', ''))
+                const docSnap = await getDoc(docRef)
+                newLikeCounter = newVal ? 1 : -1
+                if (docSnap.exists()) {
+                    if (docSnap.data().hasOwnProperty("likeCounter")) {
+                        newLikeCounter += docSnap.data()["likeCounter"]
+                    }
+                    setDoc(docRef, {
+                        "likeCounter": newLikeCounter
+                    }, { merge: true })
+                }
+                else {
+                    console.log("Drawing does not exist")
+                }
+
+                const newLikeCnt = likeCnt.map((u, i) => {
+                    let ret = u
+                    if (i == index) {
+                        ret += newVal ? 1 : -1
+                    }
+                    return ret
+                })
+                setLikeCnt(newLikeCnt)
             }
         });
 
@@ -173,9 +212,6 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
         });
         setLikeBtns(newLikes)
     }
-
-
-    /* canvasesRefs.current.slice((currentPage - 1) * drawingsPerPage, Math.min((currentPage - 1) * drawingsPerPage + drawingsPerPage, count))[index] */
 
     return (
         <>
@@ -192,7 +228,9 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
                             />
                             </div>
                             <p>Authors: {firstUser} & {secondUser}</p>
-                            <a style={likeBtnStyle} onClick={() => handleOnClickLike(index)} className='btn'>Like<img src={likeBtns[index] ? "../../../assets/heart 2.svg" : "../../../assets/heart.svg"} /></a>
+                            <a style={likeBtnStyle} onClick={() => handleOnClickLike(index)} className='btn'>Like<img src={likeBtns[index] ? "../../../assets/heart 2.svg" : "../../../assets/heart.svg"} />
+                                {likeCnt[index + (currentPage - 1) * drawingsPerPage]}
+                            </a>
                             <br /><br />
                         </>)
 
