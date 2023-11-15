@@ -254,7 +254,7 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
                                 ref={el => canvasesRefs.current[index + (currentPage - 1) * drawingsPerPage] = el}
                             />
                             </div>
-                            <p>Authors: {authors[index][0]} & {authors[index][1]}</p>
+                            <p>Authors: {authors[index] ? authors[index][0] : null} & {authors[index] ? authors[index][1] : null}</p>
                             <a style={likeBtnStyle} onClick={() => handleOnClickLike(index)} className='btn'>Like<img src={likeBtns[index] ? "../../../assets/heart 2.svg" : "../../../assets/heart.svg"} />
                                 {likeCnt[index + (currentPage - 1) * drawingsPerPage]}</a>
                             <br /><br />
