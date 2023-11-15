@@ -10,6 +10,8 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
     const [areImagesReady, setAreImagesReady] = useState(false)
     const [reload, setReload] = useState(false)
     const [likeBtns, setLikeBtns] = useState([])
+    const [firstUser, setFirstUser] = useState("Anonymous");
+    const [secondUser, setSecondUser] = useState("Anonymous");
 
     const canvasContainerStyle = {
         position: "relative",
@@ -98,6 +100,16 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
         }
         onAuthStateChanged(auth, async (user) => {
             if (user) {
+                const queryFirstUser = await getDoc(doc(db, "extraUserData", qryUnfinished.data().userId))
+                console.log(qryUnfinished.data().userId)
+                    if (queryFirstUser.exists() && queryFirstUser.data().username != undefined) {
+                        console.log("==============" + queryFirstUser.data().username)
+                        setFirstUser(queryFirstUser.data().username)
+                    }
+                const querySecondUser = await getDoc(doc(db, "extraUserData", qryCompleted.data().userId))
+                    if (querySecondUser.exists() && querySecondUser.data().username != undefined) {
+                        setSecondUser(querySecondUser.data().username)
+                    }
                 // update likes of the drawing itself, not the individual users
                 let docRef = doc(db, "drawing_likes", auth.currentUser.uid);
                 const drawingId = getDrawingLikeURL(imagesUrlsSlice, index)
@@ -119,7 +131,6 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
                     newLikeCounter = 0
                     if (qryDoc.data().hasOwnProperty(qryUnfinished.data().userId))
                         newLikeCounter = qryDoc.data()[qryUnfinished.data().userId]
-
                     newLikeCounter += (newVal ? 1 : -1)
                     updateDoc((docRef), {
                         [qryUnfinished.data().userId]: newLikeCounter
@@ -180,6 +191,7 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
                                 ref={el => canvasesRefs.current[index + (currentPage - 1) * drawingsPerPage] = el}
                             />
                             </div>
+                            <p>Authors: {firstUser} & {secondUser}</p>
                             <a style={likeBtnStyle} onClick={() => handleOnClickLike(index)} className='btn'>Like<img src={likeBtns[index] ? "../../../assets/heart 2.svg" : "../../../assets/heart.svg"} /></a>
                             <br /><br />
                         </>)

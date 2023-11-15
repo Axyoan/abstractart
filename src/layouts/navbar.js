@@ -17,7 +17,7 @@ const NavBar = () => {
     
     const getUsername = async (userId) => {
         const query = await getDoc(doc(db, "extraUserData", userId))
-        if (query.exists()) {
+        if (query.exists() && query.data().username != undefined) {
             setUsername(query.data().username)
         }
     }
@@ -90,11 +90,13 @@ const NavBar = () => {
     }
 
     useEffect(() => {
-        
+
         onAuthStateChanged(auth, (u) => {
             console.log("uh oh  ")
             setIsUserSignedIn(u != null)
-            getUsername(auth.currentUser.uid )
+            if(auth.currentUser !== null ){
+                getUsername(auth.currentUser.uid)
+            }
         })
     }, [])
 
