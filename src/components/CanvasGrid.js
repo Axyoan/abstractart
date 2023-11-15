@@ -13,6 +13,7 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
     const [likeCnt, setLikeCnt] = useState([])
     const [firstUser, setFirstUser] = useState("Anonymous");
     const [secondUser, setSecondUser] = useState("Anonymous");
+    const [authors, setAuthors] = useState([])
 
     const canvasContainerStyle = {
         position: "relative",
@@ -64,6 +65,32 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
         }
     }
 
+    const initializeAuthors = async (imagesUrlsSlice) => {
+        const authors = await Promise.all(imagesUrlsSlice.map(async (_, index) => {
+            let artists = ["Anonymous", "Anonymous"]
+            const firstId = splitUrl(imagesUrlsSlice[index][0])
+            const secondId = splitUrl(imagesUrlsSlice[index][1])
+            const qryUnfinished = await getDoc(doc(db, "unfinishedDrawings", firstId))
+            const qryCompleted = await getDoc(doc(db, "completedDrawings", secondId))
+            if (qryUnfinished.exists()) {
+                const firstUserId = await getDoc(doc(db, "extraUserData", qryUnfinished.data().userId))
+                if (firstUserId.exists() && firstUserId.data().username != undefined) {
+                    artists[0] = firstUserId.data().username
+                }
+            }
+            if (qryCompleted.exists()) {
+                const secondUserId = await getDoc(doc(db, "extraUserData", qryCompleted.data().userId))
+                if (secondUserId.exists() && secondUserId.data().username != undefined) {
+                    artists[1] = secondUserId.data().username
+                }
+            }
+            return artists
+        }))
+        setAuthors(authors)
+
+    }
+
+
     const sliceImagesUrls = () => {
         return imagesUrls.slice((currentPage - 1) * drawingsPerPage, Math.min((currentPage - 1) * drawingsPerPage + drawingsPerPage, count))
     }
@@ -73,12 +100,14 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
         const storage = getStorage();
         const imagesUrlsSlice = sliceImagesUrls()
         initializeLikes(imagesUrlsSlice)
+        initializeAuthors(imagesUrlsSlice)
         imagesUrlsSlice.forEach((imageUrl, index) => {
             const canvas = canvasesRefs.current[index + (currentPage - 1) * drawingsPerPage]
             if (canvas == null) return
             const canvasContext = canvas.getContext("2d")
             const firstImg = new Image();
             const secondImg = new Image();
+            let firstAuthor;
             getDownloadURL(ref(storage, imageUrl[0])).then((firstUrl) => {
                 firstImg.src = firstUrl
                 firstImg.onload = function () {
@@ -103,9 +132,7 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
     const updateLike = async (imagesUrlsSlice, index, newVal) => {
         const auth = getAuth();
         const firstId = splitUrl(imagesUrlsSlice[index][0])
-
         const secondSecond = splitUrl(imagesUrlsSlice[index][1])
-
         const qryUnfinished = await getDoc(doc(db, "unfinishedDrawings", firstId))
         const qryCompleted = await getDoc(doc(db, "completedDrawings", secondSecond))
         if (!qryUnfinished.exists() || !qryCompleted.exists()) {
@@ -227,10 +254,9 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
                                 ref={el => canvasesRefs.current[index + (currentPage - 1) * drawingsPerPage] = el}
                             />
                             </div>
-                            <p>Authors: {firstUser} & {secondUser}</p>
+                            <p>Authors: {authors[index][0]} & {authors[index][1]}</p>
                             <a style={likeBtnStyle} onClick={() => handleOnClickLike(index)} className='btn'>Like<img src={likeBtns[index] ? "../../../assets/heart 2.svg" : "../../../assets/heart.svg"} />
-                                {likeCnt[index + (currentPage - 1) * drawingsPerPage]}
-                            </a>
+                                {likeCnt[index + (currentPage - 1) * drawingsPerPage]}</a>
                             <br /><br />
                         </>)
 
