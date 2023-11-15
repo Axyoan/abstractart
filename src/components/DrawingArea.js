@@ -6,6 +6,7 @@ import { db } from '../firebase-config'
 import { getAuth } from 'firebase/auth'
 import Alert from '@mui/material/Alert';
 import Collapse from '@mui/material/Collapse';
+import context from 'react-bootstrap/esm/AccordionContext'
 
 const DrawingArea = ({ isNewDrawing, imageUrl = null, imageId = null, firstUserId = null }) => {
     const [uploaded, setUploaded] = useState(false)
@@ -59,6 +60,7 @@ const DrawingArea = ({ isNewDrawing, imageUrl = null, imageId = null, firstUserI
             increaseImageCounter(firstUserId)
             associateImagesInDB(id)
         }
+        
     }
     useEffect(() => {
     }, [imageUrl])
@@ -69,9 +71,11 @@ const DrawingArea = ({ isNewDrawing, imageUrl = null, imageId = null, firstUserI
                 <Canvas width={isNewDrawing ? 500 : 600} height={500} canvasRef={canvasRef} unfinishedCanvasRef={unfinishedCanvasRef} isNewDrawing={isNewDrawing} imageUrl={imageUrl} />
             </div>
             <button onClick={uploadImage} class="btn2" >Upload image</button>
-            <Collapse in={uploaded}>
-                <Alert variant="filled" severity='success' onClose={() => { setUploaded(false) }}>Draw uploaded successfully</Alert>
-            </Collapse>
+            <div style={alert}>
+                <Collapse in={true}>
+                    <Alert variant="filled" severity='success' onClose={() => { setUploaded(false) }}>Draw uploaded successfully</Alert>
+                </Collapse>
+            </div>
         </>
     )
 }
@@ -79,4 +83,10 @@ const DrawingArea = ({ isNewDrawing, imageUrl = null, imageId = null, firstUserI
 const tempStyle = {
 }
 
+const alert = {
+    position: "fixed",
+    bottom: "0",
+    left: "0",
+    width: "100%"
+}
 export default DrawingArea
