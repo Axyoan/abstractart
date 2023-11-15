@@ -102,7 +102,7 @@ const NavBar = () => {
 
     return (
         <>
-            <Navbar className="navBg" variant="light" expand="lg">
+            <Navbar className="navBg" fixed='top'>
                 <Container>
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">

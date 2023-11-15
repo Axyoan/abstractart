@@ -10,10 +10,9 @@ import HomeCarousel from '../components/HomeCarousel'
 const MainHome = () => {
 
     const { status } = useParams();
-    const [userCreated, setUserCreated] = useState(false);
-    const [userLogged, setUserLogged] = useState(false);
     const [imgsUrls, setImgsUrls] = useState([]);
     const [isDataReady, setIsDataReady] = useState(false);
+    const [userChanged, setUserChanged] = useState(false);
     const [checked, setChecked] = useState(false);
 
 
@@ -25,10 +24,7 @@ const MainHome = () => {
 
     if (!checked) {
         if (status === '1') {
-            setUserCreated(true)
-        }
-        else if (status === '2') {
-            setUserLogged(true);
+            setUserChanged(true)
         }
         setChecked(true);
     }
@@ -60,18 +56,11 @@ const MainHome = () => {
                 imgsUrls={imgsUrls}
                 isDataReady={isDataReady}
             />
-
-
-            <Collapse in={userLogged}>
-                <Alert variant="filled" onClose={() => { setUserLogged(false) }}>Welcome back!</Alert>
-            </Collapse>
-            <Collapse in={userCreated}>
-                <Alert
-                    variant="filled"
-                    onClose={() => { setUserCreated(false) }}
-
-                >User created successfully</Alert>
-            </Collapse>
+            <div style={alert}>
+                <Collapse in={userChanged}>
+                    <Alert variant="filled" severity='success' onClose={() => { setUserChanged(false) }}>User updated successfully</Alert>
+                </Collapse>
+            </div>
         </div>
 
     )
@@ -81,6 +70,13 @@ const tutorialStyle = {
     margin: "5% 20%",
     fontSize: "20px",
     color: "black"
+}
+
+const alert = {
+    position: "fixed",
+    bottom: "0",
+    left: "0",
+    width: "100%"
 }
 
 export default MainHome

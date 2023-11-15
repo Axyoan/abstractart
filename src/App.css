@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  margin-top: 50px;
 }
 
 section {
@@ -10,6 +11,8 @@ section {
 
 .navBg {
   background-color: #50218B;
-  width:191.8vh;
-
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
 }
