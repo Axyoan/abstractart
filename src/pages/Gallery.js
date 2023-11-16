@@ -3,6 +3,7 @@ import { collection, getDocs, getCountFromServer } from "firebase/firestore";
 import { db } from '../firebase-config'
 import CanvasGrid from '../components/CanvasGrid';
 import GalleryPagination from '../components/GalleryPagination'
+import ".//FontStyles.css"
 
 const Gallery = () => {
     const [imagesUrls, setImagesUrls] = useState([])
@@ -44,7 +45,9 @@ const Gallery = () => {
     return (
         <div>
             {console.log(canvasCount)}
-            <h1>view gallery</h1>
+            <div className='headers'>
+                Gallery
+            </div>  
             <CanvasGrid count={canvasCount} height={500} width={1100} canvasesRefs={canvasesRefs} imagesUrls={imagesUrls} isDataReady={isDataReady} currentPage={currentPage} drawingsPerPage={drawingsPerPage} />
             <GalleryPagination currentPage={currentPage} setCurrentPage={updateCurrentPage} pageCount={Math.ceil(canvasCount / drawingsPerPage)} />
         </div>

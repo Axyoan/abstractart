@@ -5,6 +5,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from '../firebase-config'
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import ".//FontStyles.css"
 
 const ContinueDrawing = () => {
     const { id } = useParams();
@@ -55,7 +56,7 @@ const ContinueDrawing = () => {
             <div class="photoA"></div>
 
             {isLoading ?
-                <>Loading</>
+                <div className='waiting'>Loading...</div>
                 :
                 (isUserSignedIn ?
                     <DrawingArea isNewDrawing={false} imageUrl={imageUrl} imageId={id} firstUserId={firstUserId} />

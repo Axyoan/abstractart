@@ -1,0 +1,31 @@
+.headers {
+    padding: 40px;
+    font-size: 60px;
+    font-weight: 800;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: #50218B;
+  }
+
+.waiting {
+  margin: 50px;
+  font-size: 40px;
+  font-weight: 600;
+  -webkit-text-stroke-width: 1.5px;
+  -webkit-text-stroke-color: #50218B;
+  }
+
+.drawing{
+  margin-bottom: 60px;
+}
+
+.author{
+  margin: 15px auto;
+
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  word-spacing: 5px;
+  color: #000;
+  -webkit-text-stroke-width: .2px;
+  -webkit-text-stroke-color: #50218B;
+}

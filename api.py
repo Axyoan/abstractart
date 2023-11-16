@@ -40,7 +40,7 @@ class SlopeOne(object):
                     try:
                         freq = self.freqs[diffitem][item]
                     except KeyError:
-                        print("KEY ERROR")
+                        print("skipping...")
                         continue
                     preds.setdefault(diffitem, 0.0)
                     freqs.setdefault(diffitem, 0)
@@ -51,10 +51,11 @@ class SlopeOne(object):
                         if item in available and freqs[item] > 0])
 
 def getLikesDict(user_likes, extra_user_data):
-
     total_drawings_cnt = {}
     for doc in extra_user_data:
-        total_drawings_cnt[doc.id] = doc.to_dict()["totalImagesDrawn"]
+        total_drawings_cnt[doc.id] = 1
+        if "totalImagesDrawn" in doc.to_dict():
+            total_drawings_cnt[doc.id] = doc.to_dict()["totalImagesDrawn"]
 
     print("total_drawings_cnt",total_drawings_cnt)
     like_dict = {}

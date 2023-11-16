@@ -4,6 +4,7 @@ import { doc, setDoc, getDoc, updateDoc, getDocs, collection } from "firebase/fi
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 
 import { db } from '../firebase-config'
+import "../pages/FontStyles.css"
 
 
 const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataReady, currentPage, drawingsPerPage }) => {
@@ -245,7 +246,7 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
             {
                 areImagesReady ?
                     Array.from({ length: Math.min(drawingsPerPage, count - (currentPage - 1) * drawingsPerPage) }, (_, index) =>
-                        <>
+                        <div className='drawing'>
                             <div style={canvasContainerStyle}><canvas
                                 key={index + (currentPage - 1) * drawingsPerPage}
                                 width={width}
@@ -254,11 +255,11 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
                                 ref={el => canvasesRefs.current[index + (currentPage - 1) * drawingsPerPage] = el}
                             />
                             </div>
-                            <p>Authors: {authors[index] ? authors[index][0] : null} & {authors[index] ? authors[index][1] : null}</p>
+                            <div className='author'>Authors: {authors[index] ? authors[index][0] : null} & {authors[index] ? authors[index][1] : null}</div>
                             <a style={likeBtnStyle} onClick={() => handleOnClickLike(index)} className='btn'>Like<img src={likeBtns[index] ? "../../../assets/heart 2.svg" : "../../../assets/heart.svg"} />
                                 {likeCnt[index]}</a>
                             <br /><br />
-                        </>)
+                        </div>)
 
                     :
                     <div>loading</div>

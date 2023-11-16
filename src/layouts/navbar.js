@@ -106,8 +106,8 @@ const NavBar = () => {
                                 <>
                                     <button onClick={navigateToStarDraw} class="btnStart">Start Drawing</button>
                                     <button onClick={navigateToContinueDrawing} class="btnContinue">Continue Drawing</button>
-                                    <button onClick={navigateToSettings} class="btnStart">{username}</button>
                                     <button onClick={navigateToPersonalGallery} class="btnStart">Personal Gallery</button>
+                                    <button onClick={navigateToSettings} class="btnStart">{username}</button>
                                     <button onClick={signOut} class="btnSignOut"> SignOut</button>
                                 </>
                                 :

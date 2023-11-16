@@ -37,12 +37,29 @@ const Settings = () => {
 
     return (
         <>
-            <div>
-                Username: <input value={username} onChange={(e) => { setUsername(e.target.value) }} />
+            <div style={settingsStyle}>
+                <div style={usernameStyle}><p style={lavelStyle}>Username: </p><input value={username} onChange={(e) => { setUsername(e.target.value) }} /></div>
             </div>
             <button onClick={upload}>Upload</button>
         </>
     )
+}
+
+const settingsStyle = { 
+    margin : "50px"
+}
+
+const usernameStyle = {
+    fontSize : "40px",
+    fontWeight : "400"
+}
+
+const lavelStyle = {
+    fontSize : "40px",
+    fontWeight : "600",
+    margin : "30px",
+    WebkitTextStrokeWidth : "1.5px",
+    WebkitTextStrokeColor : "#50218B"
 }
 
 export default Settings

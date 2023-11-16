@@ -5,6 +5,7 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { db } from '../firebase-config'
 import CanvasGrid from '../components/CanvasGrid';
 import GalleryPagination from '../components/GalleryPagination'
+import ".//FontStyles.css"
 
 const PersonalGallery = () => {
     const [imagesUrls, setImagesUrls] = useState([])
@@ -52,8 +53,8 @@ const PersonalGallery = () => {
     }
     return (
         <>
-            <h1>Personal gallery</h1>
-            {!isDataReady && <div>Loading...</div>}
+            <div className='headers'>Personal gallery</div>
+            {!isDataReady && <div className='waiting'>Loading...</div>}
             <CanvasGrid count={canvasCount} height={500} width={1100} canvasesRefs={canvasesRefs} imagesUrls={imagesUrls} isDataReady={isDataReady} currentPage={currentPage} drawingsPerPage={drawingsPerPage} />
             <GalleryPagination currentPage={currentPage} setCurrentPage={updateCurrentPage} pageCount={Math.ceil(canvasCount / drawingsPerPage)} />
         </>
