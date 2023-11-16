@@ -99,6 +99,7 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
         console.log("grid rendered")
         const storage = getStorage();
         const imagesUrlsSlice = sliceImagesUrls()
+        console.log(imagesUrls, imagesUrlsSlice, count)
         initializeLikes(imagesUrlsSlice)
         initializeAuthors(imagesUrlsSlice)
         imagesUrlsSlice.forEach((imageUrl, index) => {
@@ -127,7 +128,7 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
         })
         setAreImagesReady(true)
 
-    }, [isDataReady, imagesUrls, reload, currentPage])
+    }, [isDataReady, imagesUrls, reload, currentPage, count])
 
     const updateLike = async (imagesUrlsSlice, index, newVal) => {
         const auth = getAuth();

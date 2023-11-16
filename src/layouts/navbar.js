@@ -11,10 +11,10 @@ import "./navbar.css"
 const NavBar = () => {
     const navigate = useNavigate();
     const auth = getAuth()
-    
+
     const [isUserSignedIn, setIsUserSignedIn] = useState(false)
     const [username, setUsername] = useState("Anonymous");
-    
+
     const getUsername = async (userId) => {
         const query = await getDoc(doc(db, "extraUserData", userId))
         if (query.exists() && query.data().username != undefined) {
@@ -62,26 +62,21 @@ const NavBar = () => {
     const navigateToSettings = async () => {
         navigate("/settings/")
     }
-    
+
     const navigateToGallery = async () => {
-
         navigate("/gallery/")
-
     }
     const navigateToStarDraw = async () => {
-
         navigate("/StartDrawing/")
-
     }
     const navigateToSignup = async () => {
-
         navigate("/SignUp/")
-
     }
     const navigateToMain = async () => {
-
         navigate("/Home/")
-
+    }
+    const navigateToPersonalGallery = async () => {
+        navigate("/personalGallery/")
     }
 
     const signOut = async () => {
@@ -90,11 +85,9 @@ const NavBar = () => {
     }
 
     useEffect(() => {
-
         onAuthStateChanged(auth, (u) => {
-            console.log("uh oh  ")
             setIsUserSignedIn(u != null)
-            if(auth.currentUser !== null ){
+            if (auth.currentUser !== null) {
                 getUsername(auth.currentUser.uid)
             }
         })
@@ -113,7 +106,8 @@ const NavBar = () => {
                                 <>
                                     <button onClick={navigateToStarDraw} class="btnStart">Start Drawing</button>
                                     <button onClick={navigateToContinueDrawing} class="btnContinue">Continue Drawing</button>
-                                     <button onClick={navigateToSettings} class="btnStart">{username}</button>
+                                    <button onClick={navigateToSettings} class="btnStart">{username}</button>
+                                    <button onClick={navigateToPersonalGallery} class="btnStart">Personal Gallery</button>
                                     <button onClick={signOut} class="btnSignOut"> SignOut</button>
                                 </>
                                 :
