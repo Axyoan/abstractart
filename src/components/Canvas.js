@@ -230,44 +230,40 @@ function pen4()
                     />
                 </div>
                 <div className='color-container'>
-                <p1>
-                <button onClick={whiteColor}class="white"></button>
-                <button onClick={blackColor}class="black"></button>
-                <button onClick={grayColor} class="gray"></button>
-                <button onClick={blueColor} class="blue"></button>
-                <button onClick={redColor} class="red"></button>
-                <button onClick={pinkColor} class="pink"></button>
-                </p1>
-                <p2>
-                <button onClick={greenColor}class="green"></button>
-                <button onClick={greenPColor}class="greenP"></button>
-                <button onClick={bluePColor}class="blueP"></button>
-                <button onClick={yellowColor}class="yellow"></button>
-                <button onClick={orangeColor} class="orange"></button>
-                <button onClick={purpleColor}class="purple"></button>
-                </p2>
-                <p3>
-                <button onClick={brownColor}class="brown"></button>
-                <button onClick={kirbyColor}class="kirby"></button>
-                <button onClick={violetColor}class="violet"></button>
-                <button onClick={coffeeColor} class="coffee"></button>
-                <button onClick={cyanColor}class="cyan"></button>
-                <button onClick={sandColor} class="sand"></button>
-                </p3>
-                <p4>
-                     
-                <button onClick ={whiteColor} className='eraser'><img src="../../../assets/eraser.svg"/></button>
-                <button onClick ={handleClearCanvasButton} className='eraser'><img src="../../../assets/trash.svg"/></button>  
-                <button onClick={pen1}class="pen1"></button>
-                <button onClick={pen2}class="pen2"></button>
-                <button onClick={pen3}class="pen3"></button>
-                <button onClick={pen4}class="pen4"></button>
-                            
-                        
-
-                </p4>
-
-
+                    <p1>
+                    <button onClick={whiteColor}class="white"></button>
+                    <button onClick={blackColor}class="black"></button>
+                    <button onClick={grayColor} class="gray"></button>
+                    <button onClick={blueColor} class="blue"></button>
+                    <button onClick={redColor} class="red"></button>
+                    <button onClick={pinkColor} class="pink"></button>
+                    </p1>
+                    <p2>
+                    <button onClick={greenColor}class="green"></button>
+                    <button onClick={greenPColor}class="greenP"></button>
+                    <button onClick={bluePColor}class="blueP"></button>
+                    <button onClick={yellowColor}class="yellow"></button>
+                    <button onClick={orangeColor} class="orange"></button>
+                    <button onClick={purpleColor}class="purple"></button>
+                    </p2>
+                    <p3>
+                    <button onClick={brownColor}class="brown"></button>
+                    <button onClick={kirbyColor}class="kirby"></button>
+                    <button onClick={violetColor}class="violet"></button>
+                    <button onClick={coffeeColor} class="coffee"></button>
+                    <button onClick={cyanColor}class="cyan"></button>
+                    <button onClick={sandColor} class="sand"></button>
+                    </p3>
+                    <p4>
+                    <div>
+                    <button onClick ={whiteColor} className='eraser'><img src="../../../assets/eraser.svg"/></button>
+                    <button onClick ={handleClearCanvasButton} className='eraser'><img src="../../../assets/trash.svg"/></button>  
+                    </div>
+                    <button onClick={pen1}class="pen1"></button>
+                    <button onClick={pen2}class="pen2"></button>
+                    <button onClick={pen3}class="pen3"></button>
+                    <button onClick={pen4}class="pen4"></button>    
+                    </p4>
                 </div>
                 
         

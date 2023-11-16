@@ -32,7 +32,7 @@ const MainHome = () => {
     useEffect(() => {
         canvasesRefs.current = canvasesRefs.current.slice(0, drawingCountOnCarousel);
         const newImgsUrls = []
-        onSnapshot(query(collection(db, "associatedDrawings"), orderBy("likeCounter"), limit(10)), (snapshot) => {
+        onSnapshot(query(collection(db, "associatedDrawings"), orderBy("likeCounter", "desc"), limit(10)), (snapshot) => {
             snapshot.forEach(doc => {
                 const firstImageUrlToDownload = 'newDrawings/' + doc.data()["firstId"] + '.jpg'
                 const secondImageUrlToDownload = 'continuedDrawings/' + doc.data()["secondId"] + '.jpg'
@@ -58,7 +58,7 @@ const MainHome = () => {
             />
             <div style={alert}>
                 <Collapse in={userChanged}>
-                    <Alert variant="filled" severity='success' onClose={() => { setUserChanged(false) }}>User updated successfully</Alert>
+                    <Alert variant="filled" severity='success' onClose={() => { setUserChanged(false) }}>User updated successfully, refresh the page to see the changes</Alert>
                 </Collapse>
             </div>
         </div>

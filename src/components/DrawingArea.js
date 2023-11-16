@@ -12,6 +12,7 @@ const DrawingArea = ({ isNewDrawing, imageUrl = null, imageId = null, firstUserI
     const canvasRef = useRef(null)
     const unfinishedCanvasRef = useRef(null)
     const auth = getAuth()
+    const message = (isNewDrawing ? "Painting uploaded successfully ": "Painting uploaded successfully, you can go to the gallery to see it.")
 
     const saveImage = async (id, isNewDrawing) => {
         await setDoc(doc(db, isNewDrawing ? "unfinishedDrawings" : "completedDrawings", id), {
@@ -74,8 +75,8 @@ const DrawingArea = ({ isNewDrawing, imageUrl = null, imageId = null, firstUserI
             </div>
             <button onClick={uploadImage} class="btn2" >Upload image</button>
             <div style={alert}>
-                <Collapse in={uploaded}>
-                    <Alert variant="filled" severity='success' onClose={() => { setUploaded(false) }}>Paint uploaded successfully</Alert>
+                <Collapse in={uploaded}>{}
+                    <Alert variant="filled" severity='success' onClose={() => { setUploaded(false) }}>{message}</Alert>
                 </Collapse>
             </div>
         </>
