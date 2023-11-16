@@ -74,7 +74,7 @@ const HomeCarousel = ({ drawingCountOnCarousel, height, width, canvasesRefs, img
 }
 
 const canvasStyle = {
-    border: "1px solid black",
+    border: "4px solid violet",
     zIndex: "0"
 }
 
