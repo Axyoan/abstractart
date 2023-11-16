@@ -16,7 +16,7 @@ const Settings = () => {
             const docRef = doc(db, "extraUserData", auth.currentUser.uid)
             await setDoc(docRef, {
               username: username
-            })
+            },{merge: true})
         }
         changeUsername()
         navigate("/Home/1")

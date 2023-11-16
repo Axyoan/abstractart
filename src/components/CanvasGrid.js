@@ -145,7 +145,6 @@ const CanvasGrid = ({ count, width, height, canvasesRefs, imagesUrls, isDataRead
                 const queryFirstUser = await getDoc(doc(db, "extraUserData", qryUnfinished.data().userId))
                 console.log(qryUnfinished.data().userId)
                 if (queryFirstUser.exists() && queryFirstUser.data().username != undefined) {
-                    console.log("==============" + queryFirstUser.data().username)
                     setFirstUser(queryFirstUser.data().username)
                 }
                 const querySecondUser = await getDoc(doc(db, "extraUserData", qryCompleted.data().userId))

@@ -16,10 +16,10 @@ export const SignUp = () => {
   const createUsername = async (userId) => {
     const docRef = doc(db, "extraUserData", userId)
     const query = await getDoc(doc(db, "extraUserData", userId))
-    if (!query.exists()) {
+    if (!query.exists() || !query.hasOwnProperty("username")) {
       await setDoc(docRef, {
       username: "Anonymous"
-  });
+  },{ merge: true });
   }
     
 

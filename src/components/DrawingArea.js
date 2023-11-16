@@ -34,12 +34,12 @@ const DrawingArea = ({ isNewDrawing, imageUrl = null, imageId = null, firstUserI
         const docRef = doc(db, "extraUserData", userId)
         const qry = await getDoc(doc(db, "extraUserData", userId))
         let prevCnt = 0
-        if (qry.exists()) {
+        if (qry.exists() && qry.data().hasOwnProperty("totalImagesDrawn")) {
             prevCnt = qry.data().totalImagesDrawn
         }
         await setDoc(docRef, {
             totalImagesDrawn: prevCnt + 1
-        });
+        },{ merge: true });
 
     }
 
