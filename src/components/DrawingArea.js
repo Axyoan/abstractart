@@ -12,7 +12,7 @@ const DrawingArea = ({ isNewDrawing, imageUrl = null, imageId = null, firstUserI
     const canvasRef = useRef(null)
     const unfinishedCanvasRef = useRef(null)
     const auth = getAuth()
-    const message = (isNewDrawing ? "Painting uploaded successfully ": "Painting uploaded successfully, you can go to the gallery to see it.")
+    const message = (isNewDrawing ? "Painting uploaded successfully " : "Painting uploaded successfully, you can go to the gallery to see it.")
 
     const saveImage = async (id, isNewDrawing) => {
         await setDoc(doc(db, isNewDrawing ? "unfinishedDrawings" : "completedDrawings", id), {
@@ -40,7 +40,7 @@ const DrawingArea = ({ isNewDrawing, imageUrl = null, imageId = null, firstUserI
         }
         await setDoc(docRef, {
             totalImagesDrawn: prevCnt + 1
-        },{ merge: true });
+        }, { merge: true });
 
     }
 
@@ -63,19 +63,25 @@ const DrawingArea = ({ isNewDrawing, imageUrl = null, imageId = null, firstUserI
         const canvas = canvasRef.current;
         const context = canvas.getContext("2d")
         context.clearRect(0, 0, canvas.width, canvas.height);
-        
+
     }
     useEffect(() => {
     }, [imageUrl])
 
     return (
         <>
-            <div style={tempStyle}>
+            {
+                isNewDrawing ?
+                    <p style={instructionsStyle}>Be sure to draw something to the right of the dotted line so that the user who finishes the drawing has something to go off of!</p>
+                    :
+                    <p style={instructionsStyle}>To the left of the dotted line is a small piece of another drawing, complete it using your imagination!</p>
+            }
+            <div>
                 <Canvas width={isNewDrawing ? 500 : 600} height={500} canvasRef={canvasRef} unfinishedCanvasRef={unfinishedCanvasRef} isNewDrawing={isNewDrawing} imageUrl={imageUrl} />
             </div>
             <button onClick={uploadImage} class="btn2" >Upload image</button>
             <div style={alert}>
-                <Collapse in={uploaded}>{}
+                <Collapse in={uploaded}>{ }
                     <Alert variant="filled" severity='success' onClose={() => { setUploaded(false) }}>{message}</Alert>
                 </Collapse>
             </div>
@@ -83,7 +89,13 @@ const DrawingArea = ({ isNewDrawing, imageUrl = null, imageId = null, firstUserI
     )
 }
 
-const tempStyle = {
+const instructionsStyle = {
+    margin: "0 20%",
+    marginTop: "50px",
+    fontSize: "20px",
+    color: "black",
+    backgroundColor: "white",
+    borderRadius: "10px"
 }
 
 const alert = {
